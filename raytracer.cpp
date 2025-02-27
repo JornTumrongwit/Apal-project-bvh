@@ -59,10 +59,16 @@ myvec3 raytracer(myvec3 raydir, myvec3 position, float depth)
 	float closest = std::numeric_limits<float>::max();
 	SHAPE intersect = NONE;
 	for (Sphere testSphere : SphereList) {
-		CheckIntersect(hitsph, closest, &raydir, tempnormal, inter, intersect, &position, &testSphere);
+		if(testSphere.CheckIntersect(closest, &raydir, tempnormal, inter, &position)){
+			intersect = SPHERE;
+			hitsph = testSphere;
+		}
 	}
 	for (Triangle testTriangle : TriangleList) {
-		CheckIntersect(hittri, closest, &raydir, tempnormal, inter, intersect, &position, &testTriangle);
+		if(testTriangle.CheckIntersect(closest, &raydir, tempnormal, inter, &position)){
+			intersect = TRIANGLE;
+			hittri = testTriangle;
+		}
 	}
 	if (intersect == TRIANGLE) {
 		get_color_tri(raydir, point_int, hittri, position, tempnormal, pixels, depth);
@@ -71,190 +77,6 @@ myvec3 raytracer(myvec3 raydir, myvec3 position, float depth)
 		get_color_sph(raydir, point_int, hitsph, position, tempnormal, pixels, depth);
 	}
 	return pixels;
-}
-
-void CheckIntersect(Triangle& target, float& closest, myvec3* raydir, myvec3& normal, myvec3*& point_int, SHAPE& intersect, myvec3* position, Triangle* input) {
-	//std::clog << "called triangle\n";
-	//std::clog << "raydir: " << raydir.x << " "<<raydir.y << " "<<raydir.z << "\n";
-	float P1DotN = dot(*raydir, input->normal);
-	if (P1DotN == 0) return;
-	float t = (dot(input->vertA, input->normal) - dot(*position, input->normal)) / P1DotN;
-	if(t>=closest || t<0) return;
-	myvec3 inters = (t * *raydir) + *position;
-	/*
-	std::clog<<"Inters: ";
-	printvec3(inters);
-	std::clog<<"\n";
-	*/
-	myvec3 PminusA = inters - myvec3(input->vertA.x, input->vertA.y, input->vertA.z);
-	myvec3 BminusA = myvec3(input->vertB.x, input->vertB.y, input->vertB.z) - myvec3(input->vertA.x, input->vertA.y, input->vertA.z);
-	myvec3 CminusA = myvec3(input->vertC.x, input->vertC.y, input->vertC.z) - myvec3(input->vertA.x, input->vertA.y, input->vertA.z);
-	float beta = -1;
-	float gamma = -1;
-	if(BminusA.y == 0 && CminusA.y == 0){
-		if(BminusA.x == 0){
-			myvec3 temp = BminusA;
-			BminusA = CminusA;
-			CminusA = temp;
-		}
-		float constantterm = (PminusA.z) - ((PminusA.x) * (BminusA.z) / (BminusA.x));
-		float betafromgamma = ((CminusA.x) * (BminusA.z) / (BminusA.x));
-		float multiplier = -betafromgamma + (CminusA.z);
-		gamma = constantterm / multiplier;
-		beta = (PminusA.x - gamma * (CminusA.x)) / (BminusA.x);
-	}
-	else if(BminusA.x == 0 && CminusA.x == 0){
-		if(BminusA.z == 0){
-			myvec3 temp = BminusA;
-			BminusA = CminusA;
-			CminusA = temp;
-		}
-		float constantterm = (PminusA.y) - ((PminusA.z) * (BminusA.y) / (BminusA.z));
-		float betafromgamma = ((CminusA.z) * (BminusA.y) / (BminusA.z));
-		float multiplier = -betafromgamma + (CminusA.y);
-		gamma = constantterm / multiplier;
-		beta = (PminusA.z - gamma * (CminusA.z)) / (BminusA.z);
-	}
-	else{
-		if(BminusA.x == 0){
-			myvec3 temp = BminusA;
-			BminusA = CminusA;
-			CminusA = temp;
-		}
-		float constantterm = (PminusA.y) - ((PminusA.x) * (BminusA.y) / (BminusA.x));
-		float betafromgamma = ((CminusA.x) * (BminusA.y) / (BminusA.x));
-		float multiplier = -betafromgamma + (CminusA.y);
-		gamma = constantterm / multiplier;
-		beta = (PminusA.x - gamma * (CminusA.x)) / (BminusA.x);
-	}
-	if ((beta + gamma <= 1) && (beta >= 0) && (gamma >= 0)) {
-		/*
-		std::clog<<"passed\n";
-		std::clog<<"Stats: "<<beta + gamma<<", "<<beta<<", "<<gamma<<"\n";
-		std::clog<<"Inters: ";
-		printvec3(inters);
-		std::clog<<"\n";
-		*/
-		copytri(input, target);
-		intersect = TRIANGLE;
-		point_int->x = inters.x;
-		point_int->y = inters.y;
-		point_int->z = inters.z;
-		closest = t;
-		normal.x = input->normal.x;
-		normal.y = input->normal.y;
-		normal.z = input->normal.z;
-	}
-	else{
-		//std::clog<<"failed\n";
-	}
-}
-
-void copytri(Triangle* input, Triangle& out){
-	for(int i = 0; i<3; i++){
-		out.ambient[i] = input->ambient[i];
-		out.diffuse[i] = input->diffuse[i];
-		out.specular[i] = input->specular[i];
-		out.emission[i] = input->emission[i];
-		/*
-		out->vertA[i] = input->vertA[i];
-		out->vertB[i] = input->vertB[i];
-		out->vertC[i] = input->vertC[i];
-		out->normal[i] = input->normal[i];
-		*/
-	}
-	out.shininess = input->shininess;
-	out.vertA = input->vertA;
-	out.vertB = input->vertB;
-	out.vertC = input->vertC;
-	out.normal.x = input->normal.x;
-}
-
-void CheckIntersect(Sphere& target, float& closest, myvec3* raydir, myvec3& normal, myvec3*& point_int, SHAPE& intersect, myvec3* position, Sphere* input) {
-	/*
-	std::clog<<"raydir: ";
-	printvec3(*raydir);
-	std::clog<<"\n";
-	*/
-	myvec3 p1 = input->inv_transform * *raydir;
-	/*
-	std::clog<<"P1: ";
-	printvec3(p1);
-	std::clog<<"\n";*/
-	myvec4 p0 = input->inv_transform * myvec4(position->x, position->y, position->z, 1);
-	/*
-	std::clog<<"treye: ";
-	printvec4(treye);
-	std::clog<<"\n";
-	*/
-	myvec3 P0minusC = myvec3(p0.x, p0.y, p0.z) - input->position;
-	float a = dot(p1, p1);
-	float b = 2 * dot(p1, P0minusC);
-	float c = dot(P0minusC, P0minusC) - input->radius * input->radius;
-	float checker = b * b - 4 * a * c;
-	//std::clog<<"checker: "<<checker<<"\n";
-	if (checker >= 0) {
-		//std::clog<<"Has intersect\n";
-		float sqrtres = sqrt(checker);
-		float distsmall = (-b - sqrtres) / (2 * a);
-		//std::clog<<distsmall<<"\n";
-		if (distsmall > 0) {
-			myvec4 oldinters = p0 + distsmall * p1;
-			if (distsmall < closest) {
-				myvec4 inters = input->transform * oldinters;
-				copysph(input, target);
-				intersect = SPHERE;
-				point_int->x = inters.x;
-				point_int->y = inters.y;
-				point_int->z = inters.z;
-				closest = distsmall;
-				myvec3 newnormal = myvec3(oldinters.x, oldinters.y, oldinters.z) - input->position;
-				normal.x = newnormal.x;
-				normal.y = newnormal.y;
-				normal.z = newnormal.z;
-			}
-		}
-		else {
-			float distbig = (-b + sqrtres) / (2 * a);
-			//std::clog<<distbig<<"\n";
-			if (distbig > 0) {
-				myvec4 oldinters = p0 + distbig * p1;
-				myvec4 inters = input->transform * oldinters;
-				if (distbig < closest) {
-					copysph(input, target);
-					intersect = SPHERE;
-					point_int->x = inters.x;
-					point_int->y = inters.y;
-					point_int->z = inters.z;
-					closest = distbig;
-					myvec3 newnormal = myvec3(oldinters.x, oldinters.y, oldinters.z) - input->position;
-					normal.x = newnormal.x;
-					normal.y = newnormal.y;
-					normal.z = newnormal.z;
-				}
-			}
-		}
-	}
-}
-
-void copysph(Sphere* input, Sphere& out){
-	for(int i = 0; i<3; i++){
-		out.ambient[i] = input->ambient[i];
-		out.diffuse[i] = input->diffuse[i];
-		out.specular[i] = input->specular[i];
-		out.emission[i] = input->emission[i];
-		/*
-		out->vertA[i] = input->vertA[i];
-		out->vertB[i] = input->vertB[i];
-		out->vertC[i] = input->vertC[i];
-		out->normal[i] = input->normal[i];
-		*/
-	}
-	out.shininess = input->shininess;
-	out.position = input->position;
-	out.inv_transform = input->inv_transform;
-	out.radius = input->radius;
-	out.transform = input->transform;
 }
 
 void get_color_tri(myvec3 raydir, myvec3 intersect, Triangle hittri, myvec3 position, myvec3 viewnormal, myvec3& pixels, float depth) {
@@ -354,81 +176,11 @@ void get_color(myvec3 raydir, myvec3 mypos, myvec3 intersect, myvec3 eyedirn, my
 bool blockCheck(float closest, myvec3 raydir, myvec3 position){
 	
 	for (Sphere testSphere : SphereList) {
-		myvec3 p1 = testSphere.inv_transform * raydir;
-		myvec4 p0 = testSphere.inv_transform * myvec4(position.x, position.y, position.z, 1);
-		myvec3 P0minusC = myvec3(p0.x, p0.y, p0.z) - testSphere.position;
-		float a = dot(p1, p1);
-		float b = 2 * dot(p1, P0minusC);
-		float c = dot(P0minusC, P0minusC) - testSphere.radius * testSphere.radius;
-		float checker = b * b - 4 * a * c;
-		if (checker >= 0) {
-			float sqrtres = sqrt(checker);
-			float distsmall = (-b - sqrtres) / (2 * a);
-			if (distsmall > 0 && distsmall < closest) return false;
-			else{
-				float distbig = (-b + sqrtres) / (2 * a);
-				if (distbig > 0 && distbig < closest){
-					return false;
-				}
-			}
-		}
+		if(!testSphere.blockCheck(closest, raydir, position)) return false;
 	}
 	
 	for (Triangle testTriangle : TriangleList) {
-		float P1DotN = dot(raydir, testTriangle.normal);
-		if (P1DotN == 0) continue;
-		float t = (dot(testTriangle.vertA, testTriangle.normal) - dot(position, testTriangle.normal)) / P1DotN;
-		if(t>=closest || t < 0) continue;
-		myvec3 inters = (t * raydir) + position;
-		/*
-		std::clog<<"Inters: ";
-		printvec3(inters);
-		std::clog<<"\n";
-		*/
-		myvec3 PminusA = inters - myvec3(testTriangle.vertA.x, testTriangle.vertA.y, testTriangle.vertA.z);
-		myvec3 BminusA = myvec3(testTriangle.vertB.x, testTriangle.vertB.y, testTriangle.vertB.z) - myvec3(testTriangle.vertA.x, testTriangle.vertA.y, testTriangle.vertA.z);
-		myvec3 CminusA = myvec3(testTriangle.vertC.x, testTriangle.vertC.y, testTriangle.vertC.z) - myvec3(testTriangle.vertA.x, testTriangle.vertA.y, testTriangle.vertA.z);
-		float beta = -1;
-		float gamma = -1;
-		if(BminusA.y == 0 && CminusA.y == 0){
-			if(BminusA.x == 0){
-				myvec3 temp = BminusA;
-				BminusA = CminusA;
-				CminusA = temp;
-			}
-			float constantterm = (PminusA.z) - ((PminusA.x) * (BminusA.z) / (BminusA.x));
-			float betafromgamma = ((CminusA.x) * (BminusA.z) / (BminusA.x));
-			float multiplier = -betafromgamma + (CminusA.z);
-			gamma = constantterm / multiplier;
-			beta = (PminusA.x - gamma * (CminusA.x)) / (BminusA.x);
-		}
-		else if(BminusA.x == 0 && CminusA.x == 0){
-			if(BminusA.z == 0){
-				myvec3 temp = BminusA;
-				BminusA = CminusA;
-				CminusA = temp;
-			}
-			float constantterm = (PminusA.y) - ((PminusA.z) * (BminusA.y) / (BminusA.z));
-			float betafromgamma = ((CminusA.z) * (BminusA.y) / (BminusA.z));
-			float multiplier = -betafromgamma + (CminusA.y);
-			gamma = constantterm / multiplier;
-			beta = (PminusA.z - gamma * (CminusA.z)) / (BminusA.z);
-		}
-		else{
-			if(BminusA.x == 0){
-				myvec3 temp = BminusA;
-				BminusA = CminusA;
-				CminusA = temp;
-			}
-			float constantterm = (PminusA.y) - ((PminusA.x) * (BminusA.y) / (BminusA.x));
-			float betafromgamma = ((CminusA.x) * (BminusA.y) / (BminusA.x));
-			float multiplier = -betafromgamma + (CminusA.y);
-			gamma = constantterm / multiplier;
-			beta = (PminusA.x - gamma * (CminusA.x)) / (BminusA.x);
-		}
-		if ((beta + gamma <= 1) && (beta >= 0) && (gamma >= 0)) {
-			return false;
-		}
+		if (!testTriangle.blockCheck(closest, raydir, position)) return false;
 	}
 	return true;
 }
