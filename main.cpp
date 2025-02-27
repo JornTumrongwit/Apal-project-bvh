@@ -59,6 +59,6 @@ int main(int argc, char* argv[]) {
   }
   readfile(argv[1]);
 
-  saveScreenshot("out.ppm");
+  saveScreenshot("output/out.ppm");
   return 0;
 }

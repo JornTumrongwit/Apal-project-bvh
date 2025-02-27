@@ -1,9 +1,5 @@
 // Transform.cpp: implementation of the Transform class.
 
-// Note: when you construct a matrix using mat4() or mat3(), it will be COLUMN-MAJOR
-// Keep this in mind in readfile.cpp and display.cpp
-// See FAQ for more details or if you're having problems.
-
 #include "Transform.h"
 #include <iostream>
 #include <cmath>
