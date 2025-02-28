@@ -9,40 +9,6 @@
 #include <fstream>
 #include <sstream>
 
-/*
-class Object {       // The class
-public:             // Access specifier
-	float ambient[3];
-	float diffuse[3];
-	float specular[3];
-	float emission[3];
-	float shininess;
-	Object() = default;
-};
-
-class Sphere : public Object {
-public:
-	myvec3 position;
-	float radius;
-	mymat4 transform;
-	mymat4 inv_transform;
-
-	Sphere() = default;
-	void CheckIntersect(Sphere& target, float& closest, myvec3 raydir, myvec4& point_int, SHAPE& intersect, myvec3 position);
-};
-
-class Triangle : public Object {
-public:
-	myvec4 vertA;
-	myvec4 vertB;
-	myvec4 vertC;
-	myvec3 normal;
-
-	Triangle() = default;
-	void CheckIntersect(Triangle& target, float& closest, myvec3 raydir, myvec4& point_int, SHAPE& intersect, myvec3 position);
-};
-*/
-
 const float epsilon = 0.001;
 
 myvec3 raytracer(myvec3 raydir, myvec3 position, float depth)
@@ -52,50 +18,57 @@ myvec3 raytracer(myvec3 raydir, myvec3 position, float depth)
 	}
 	Sphere hitsph;
 	Triangle hittri;
+	Object* hitObj;
 	myvec3 tempnormal = myvec3(0, 0, 0);
 	myvec3 point_int = myvec3(0, 0, 0);
 	myvec3* inter = &point_int;
 	myvec3 pixels = myvec3(0, 0, 0);
 	float closest = std::numeric_limits<float>::max();
 	SHAPE intersect = NONE;
-	for (Sphere testSphere : SphereList) {
-		if(testSphere.CheckIntersect(closest, &raydir, tempnormal, inter, &position)){
-			intersect = SPHERE;
-			hitsph = testSphere;
+	for (Object* testObj : ObjectList) {
+		if(testObj->CheckIntersect(closest, &raydir, tempnormal, inter, &position)){
+			intersect = testObj -> poly_type;
+			hitObj = testObj;
 		}
 	}
-	for (Triangle testTriangle : TriangleList) {
-		if(testTriangle.CheckIntersect(closest, &raydir, tempnormal, inter, &position)){
-			intersect = TRIANGLE;
-			hittri = testTriangle;
-		}
-	}
+	// for (Sphere testSphere : SphereList) {
+	// 	if(testSphere.CheckIntersect(closest, &raydir, tempnormal, inter, &position)){
+	// 		intersect = SPHERE;
+	// 		hitsph = testSphere;
+	// 	}
+	// }
+	// for (Triangle testTriangle : TriangleList) {
+	// 	if(testTriangle.CheckIntersect(closest, &raydir, tempnormal, inter, &position)){
+	// 		intersect = TRIANGLE;
+	// 		hittri = testTriangle;
+	// 	}
+	// }
 	if (intersect == TRIANGLE) {
-		get_color_tri(raydir, point_int, hittri, position, tempnormal, pixels, depth);
+		get_color_tri(raydir, point_int, static_cast<Triangle*>(hitObj), position, tempnormal, pixels, depth);
 	}
 	else if (intersect == SPHERE) {
-		get_color_sph(raydir, point_int, hitsph, position, tempnormal, pixels, depth);
+		get_color_sph(raydir, point_int, static_cast<Sphere*>(hitObj), position, tempnormal, pixels, depth);
 	}
 	return pixels;
 }
 
-void get_color_tri(myvec3 raydir, myvec3 intersect, Triangle hittri, myvec3 position, myvec3 viewnormal, myvec3& pixels, float depth) {
+void get_color_tri(myvec3 raydir, myvec3 intersect, Triangle* hittri, myvec3 position, myvec3 viewnormal, myvec3& pixels, float depth) {
 	myvec3 eyedirn = normalize(position - intersect);
 
 	// Compute normal
 	myvec3 normal = normalize(viewnormal);
 
-	get_color(raydir, position, intersect, eyedirn, normal, toVec3(hittri.diffuse), toVec3(hittri.specular), hittri.shininess, hittri.ambient, hittri.emission, pixels, depth);
+	get_color(raydir, position, intersect, eyedirn, normal, toVec3(hittri->diffuse), toVec3(hittri->specular), hittri->shininess, hittri->ambient, hittri->emission, pixels, depth);
 }
 
-void get_color_sph(myvec3 raydir, myvec3 intersect, Sphere hitsph, myvec3 position, myvec3 getnormal, myvec3& pixels, float depth) {
-	myvec3 viewnormal = transpose(hitsph.inv_transform) * getnormal;
+void get_color_sph(myvec3 raydir, myvec3 intersect, Sphere* hitsph, myvec3 position, myvec3 getnormal, myvec3& pixels, float depth) {
+	myvec3 viewnormal = transpose(hitsph->inv_transform) * getnormal;
 	myvec3 eyedirn = normalize(position - intersect);
 
 	// Compute normal
 	myvec3 normal = normalize(viewnormal);
 
-	get_color(raydir, position, intersect, eyedirn, normal, toVec3(hitsph.diffuse), toVec3(hitsph.specular), hitsph.shininess, hitsph.ambient, hitsph.emission, pixels, depth);
+	get_color(raydir, position, intersect, eyedirn, normal, toVec3(hitsph->diffuse), toVec3(hitsph->specular), hitsph->shininess, hitsph->ambient, hitsph->emission, pixels, depth);
 }
 
 myvec3 ComputeLight(myvec3 direction, myvec3 lightcolor, myvec3 normal, myvec3 halfvec, myvec3 mydiffuse, myvec3 myspecular, float myshininess) {
@@ -174,14 +147,16 @@ void get_color(myvec3 raydir, myvec3 mypos, myvec3 intersect, myvec3 eyedirn, my
 
 //if return false, then there is something blocking it
 bool blockCheck(float closest, myvec3 raydir, myvec3 position){
-	
-	for (Sphere testSphere : SphereList) {
-		if(!testSphere.blockCheck(closest, raydir, position)) return false;
+	for (Object* testObj : ObjectList){
+		if(!testObj->blockCheck(closest, raydir, position)) return false;
 	}
+	// for (Sphere testSphere : SphereList) {
+	// 	if(!testSphere.blockCheck(closest, raydir, position)) return false;
+	// }
 	
-	for (Triangle testTriangle : TriangleList) {
-		if (!testTriangle.blockCheck(closest, raydir, position)) return false;
-	}
+	// for (Triangle testTriangle : TriangleList) {
+	// 	if (!testTriangle.blockCheck(closest, raydir, position)) return false;
+	// }
 	return true;
 }
 

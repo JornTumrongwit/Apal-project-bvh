@@ -58,7 +58,7 @@ int main(int argc, char* argv[]) {
     exit(-1); 
   }
   readfile(argv[1]);
-
+  std::cout<<"File read\n";
   saveScreenshot("output/out.ppm");
   return 0;
 }

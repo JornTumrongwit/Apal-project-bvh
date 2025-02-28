@@ -64,4 +64,5 @@ EXTERN int numtriangles;
 
 EXTERN std::vector<Sphere> SphereList;
 EXTERN std::vector<Triangle> TriangleList;
+EXTERN std::vector<Object*> ObjectList;
 EXTERN std::vector<myvec4> vertices;

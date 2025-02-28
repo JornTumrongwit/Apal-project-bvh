@@ -1,6 +1,9 @@
 #pragma once
 #include <stdexcept>
 #include <iostream>
+
+//General linear algebra library
+
 struct myvec3 {
 	myvec3(float x, float y, float z);
 	myvec3() = default;
