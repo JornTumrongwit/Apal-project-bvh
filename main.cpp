@@ -10,6 +10,8 @@
 #include <stack>
 #include "./Transform.h"
 #include "./raytracer.h"
+#include "./bbox.h"
+#include "objects.h"
 // Main variables in the program.  
 #define MAINPROGRAM 
 #include "./variables.h" 
@@ -26,6 +28,12 @@ void saveScreenshot(string fname) {
 
   pix.resize(w*h);
 
+  //BBox check
+  for (Object* obj: ObjectList){
+    BBox* sBB = new SimpleBBox(obj);
+    sBB->printcheck();
+  }
+  
   #pragma omp parallel for
   for (int j = h-1; j >=0; j--) {
       for (int i = 0; i < w; i++) {

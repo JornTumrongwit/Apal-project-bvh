@@ -7,7 +7,7 @@ enum SHAPE { NONE, TRIANGLE, SPHERE };
 
 //General objects (Sphere and triangles)
 
-class Object {       // The class
+class Object {       // The abstract class for polygons
 public:             // Access specifier
 	SHAPE poly_type = NONE;
 	float ambient[3];
@@ -16,7 +16,11 @@ public:             // Access specifier
 	float emission[3];
 	float shininess;
 	Object() = default;
-	//BBox BoundingBox();
+
+	virtual void Bound(myvec3* bottomleft, myvec3* topright){
+		return;
+	};
+
 	virtual bool CheckIntersect(float& closest, myvec3* raydir, myvec3& normal, myvec3*& point_int, myvec3* position){
 		std::cout<<"Weird\n";
 		return false;
@@ -37,6 +41,7 @@ public:
 	Sphere() = default;
 	bool CheckIntersect(float& closest, myvec3* raydir, myvec3& normal, myvec3*& point_int, myvec3* position);
 	bool blockCheck(float closest, myvec3 raydir, myvec3 position);
+	void Bound(myvec3* bottomleft, myvec3* topright);
 };
 
 class Triangle : public Object {
@@ -49,4 +54,5 @@ public:
 	Triangle() = default;
 	bool CheckIntersect(float& closest, myvec3* raydir, myvec3& normal, myvec3*& point_int, myvec3* position);
 	bool blockCheck(float closest, myvec3 raydir, myvec3 position);
+	void Bound(myvec3* bottomleft, myvec3* topright);
 };

@@ -223,3 +223,47 @@ bool Triangle::blockCheck(float closest, myvec3 raydir, myvec3 position) {
 	}
 	return true;
 }
+
+float helper_pos(mymat4 m4, int i){
+	float back = m4.content[i][3];
+	float bottom = m4.content[3][3];
+	float front = m4.content[i][i];
+	return (back + sqrtf(back * back - (bottom * front))) / bottom;
+}
+
+float helper_neg(mymat4 m4, int i){
+	float back = m4.content[i][3];
+	float bottom = m4.content[3][3];
+	float front = m4.content[i][i];
+	return (back - sqrtf(back * back - (bottom * front))) / bottom;
+}
+
+void Sphere::Bound(myvec3* bottomleft, myvec3* topright){
+	mymat4 s_mat_inv = mymat4(1/this->radius);
+	s_mat_inv.content[3][3] = -1.f;
+
+	mymat4 R = this->transform * s_mat_inv * transpose(this->transform);
+	topright->x = helper_neg(R, 0);
+	topright->y = helper_neg(R, 1);
+	topright->z = helper_neg(R, 2);
+
+	bottomleft->x = helper_pos(R, 0);
+	bottomleft->y = helper_pos(R, 1);
+	bottomleft->z = helper_pos(R, 2);
+}
+
+void Triangle::Bound(myvec3* bottomleft, myvec3* topright){
+	bottomleft->x = std::min(this->vertA.x, this->vertB.x);
+	bottomleft->x = std::min(bottomleft->x, this->vertC.x);
+	bottomleft->y = std::min(this->vertA.y, this->vertB.y);
+	bottomleft->y = std::min(bottomleft->y, this->vertC.y);
+	bottomleft->z = std::min(this->vertA.z, this->vertB.z);
+	bottomleft->z = std::min(bottomleft->z, this->vertC.z);
+
+	topright->x = std::max(this->vertA.x, this->vertB.x);
+	topright->x = std::max(topright->x, this->vertC.x);
+	topright->y = std::max(this->vertA.y, this->vertB.y);
+	topright->y = std::max(topright->y, this->vertC.y);
+	topright->z = std::max(this->vertA.z, this->vertB.z);
+	topright->z = std::max(topright->z, this->vertC.z);
+}
