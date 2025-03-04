@@ -242,25 +242,25 @@ void readfile(const char* filename)
                         fovx = atan(tanx) * 360/pi;
                     }
                 }
+                
                 else if (cmd == "sphere") {
                     validinput = readvals(s, 4, values);
                     if (validinput) {
-                        Sphere* sph = new Sphere();
-                        sph->position = myvec3(values[0], values[1], values[2]);
-                        sph->radius = values[3];
+                        Sphere sph;
+                        sph.position = myvec3(values[0], values[1], values[2]);
+                        sph.radius = values[3];
                         for (int i = 0; i < 3; i++) {
-                            sph->ambient[i] = ambient[i];
-                            sph->specular[i] = specular[i];
-                            sph->diffuse[i] = diffuse[i];
-                            sph->emission[i] = emission[i];
+                            sph.ambient[i] = ambient[i];
+                            sph.specular[i] = specular[i];
+                            sph.diffuse[i] = diffuse[i];
+                            sph.emission[i] = emission[i];
                         }
-                        sph->shininess = shininess;
-                        sph->transform = transfstack.top();
-                        sph->inv_transform = invtransfstack.top();
-                        sph->poly_type = SPHERE;
-                        //SphereList.push_back(sph);
-                        Object* obj = sph;
-                        ObjectList.push_back(obj);
+                        sph.shininess = shininess;
+                        sph.transform = transfstack.top();
+                        sph.inv_transform = invtransfstack.top();
+                        sph.poly_type = SPHERE;
+                        sph.Bound();
+                        SphereList.push_back(sph);
                     }
                 }
 
@@ -281,24 +281,23 @@ void readfile(const char* filename)
                     validinput = readind(s, 3, val);
                     if (validinput) {
                         mymat4 T = transfstack.top();
-                        Triangle* tri = new Triangle();
-                        tri->vertA = T * vertices[val[0]];
-                        tri->vertB = T * vertices[val[1]];
-                        tri->vertC = T * vertices[val[2]];
-                        myvec4 BminusA = tri->vertB - tri->vertA;
-                        myvec4 CminusA = tri->vertC - tri->vertA;
-                        tri->normal = normalize(cross(myvec3(BminusA[0], BminusA[1], BminusA[2]), myvec3(CminusA[0], CminusA[1], CminusA[2])));
+                        Triangle tri;
+                        tri.vertA = T * vertices[val[0]];
+                        tri.vertB = T * vertices[val[1]];
+                        tri.vertC = T * vertices[val[2]];
+                        myvec4 BminusA = tri.vertB - tri.vertA;
+                        myvec4 CminusA = tri.vertC - tri.vertA;
+                        tri.normal = normalize(cross(myvec3(BminusA[0], BminusA[1], BminusA[2]), myvec3(CminusA[0], CminusA[1], CminusA[2])));
                         for (int i = 0; i < 3; i++) {
-                            tri->ambient[i] = ambient[i];
-                            tri->specular[i] = specular[i];
-                            tri->diffuse[i] = diffuse[i];
-                            tri->emission[i] = emission[i];
+                            tri.ambient[i] = ambient[i];
+                            tri.specular[i] = specular[i];
+                            tri.diffuse[i] = diffuse[i];
+                            tri.emission[i] = emission[i];
                         }
-                        tri->shininess = shininess;
-                        tri->poly_type = TRIANGLE;
-                        //TriangleList.push_back(tri);
-                        Object* obj = tri;
-                        ObjectList.push_back(obj);
+                        tri.shininess = shininess;
+                        tri.poly_type = TRIANGLE;
+                        tri.Bound();
+                        TriangleList.push_back(tri);
                     }
                 }
 

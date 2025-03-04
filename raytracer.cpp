@@ -34,13 +34,13 @@ myvec3 raytracer(myvec3 raydir, myvec3 position, float depth)
 	// for (Sphere testSphere : SphereList) {
 	// 	if(testSphere.CheckIntersect(closest, &raydir, tempnormal, inter, &position)){
 	// 		intersect = SPHERE;
-	// 		hitsph = testSphere;
+	// 		hitObj = &testSphere;
 	// 	}
 	// }
 	// for (Triangle testTriangle : TriangleList) {
 	// 	if(testTriangle.CheckIntersect(closest, &raydir, tempnormal, inter, &position)){
 	// 		intersect = TRIANGLE;
-	// 		hittri = testTriangle;
+	// 		hitObj = &testTriangle;
 	// 	}
 	// }
 	if (intersect == TRIANGLE) {

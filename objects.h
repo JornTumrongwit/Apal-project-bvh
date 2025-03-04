@@ -14,10 +14,13 @@ public:             // Access specifier
 	float diffuse[3];
 	float specular[3];
 	float emission[3];
+	myvec3 bottomleft;
+	myvec3 topright;
+
 	float shininess;
 	Object() = default;
 
-	virtual void Bound(myvec3* bottomleft, myvec3* topright){
+	virtual void Bound(){
 		return;
 	};
 
@@ -28,7 +31,11 @@ public:             // Access specifier
 	virtual bool blockCheck(float closest, myvec3 raydir, myvec3 position){
 		std::cout<<"Weird\n";
 		return false;
-	}
+	};
+
+	virtual myvec3 centroid(){
+		return (bottomleft + topright)*0.5f;
+	};
 };
 
 class Sphere : public Object {
@@ -41,7 +48,7 @@ public:
 	Sphere() = default;
 	bool CheckIntersect(float& closest, myvec3* raydir, myvec3& normal, myvec3*& point_int, myvec3* position);
 	bool blockCheck(float closest, myvec3 raydir, myvec3 position);
-	void Bound(myvec3* bottomleft, myvec3* topright);
+	void Bound();
 };
 
 class Triangle : public Object {
@@ -54,5 +61,5 @@ public:
 	Triangle() = default;
 	bool CheckIntersect(float& closest, myvec3* raydir, myvec3& normal, myvec3*& point_int, myvec3* position);
 	bool blockCheck(float closest, myvec3 raydir, myvec3 position);
-	void Bound(myvec3* bottomleft, myvec3* topright);
+	void Bound();
 };

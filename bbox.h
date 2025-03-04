@@ -5,16 +5,32 @@
 #include <iostream>
 
 //bounding box
+//We'll implement the top-down construction
+
 class BBox{
 	public:
+		bool isleaf;
+		int max_obj_amt;
 		Object* obj;
-		BBox() = default;
-		BBox(BBox* bb1, BBox* bb2){ BBox(); };
+		BBox* child_A;
+		BBox* child_B;
 
-		BBox(myvec3 bottomleft, myvec3 topright, Object* this_obj){
-			obj = this_obj;
+		//Splits this current box into 2 nodes
+		virtual void split(){
+			return;
+		}
+
+		BBox(){
+			obj = nullptr;
+			child_A = nullptr;
+			child_B = nullptr;
 		};
 
+		BBox(int max_amt){
+			BBox();
+			max_obj_amt = max_amt;
+		};
+		
 		// virtual void traverse(float& closest, myvec3* raydir, myvec3& normal, myvec3*& point_int, myvec3* position){
 		// 	return;
 		// }
@@ -22,6 +38,11 @@ class BBox{
 		virtual void printcheck(){
 			std::cout<<"Default box abstract\n";
 		};
+
+		
+		virtual void unionBounds(Object* obj){
+			return;
+		}
 };
 
 //Simple box using vec3 as the coordinates
@@ -32,21 +53,17 @@ class SimpleBBox: public BBox{
 
 		//void traverse(float& closest, myvec3* raydir, myvec3& normal, myvec3*& point_int, myvec3* position);
 
-		SimpleBBox(SimpleBBox* bb1, SimpleBBox* bb2){
-			this->bottomleft = myvec3(std::min(bb1->bottomleft.x, bb2->bottomleft.x), 
-									std::min(bb1->bottomleft.y, bb2->bottomleft.y),
-									std::min(bb1->bottomleft.z, bb2->bottomleft.z));
-			this->topright = myvec3(std::max(bb1->topright.x, bb2->topright.x), 
-								std::max(bb1->topright.y, bb2->topright.y),
-								std::max(bb1->bottomleft.z, bb2->topright.z));
-		};
-
-		SimpleBBox(Object* this_obj){
-			this->bottomleft = myvec3(0, 0, 0);
-			this->topright = myvec3(0, 0, 0);
-			this_obj->Bound(&this->bottomleft, &this->topright);
-			this->obj = this_obj;
-		};
+		SimpleBBox() = default;
+		
+		void unionBounds(Object* obj){
+			this->bottomleft.x = std::min(this->bottomleft.x, obj->bottomleft.x);
+			this->bottomleft.y = std::min(this->bottomleft.y, obj->bottomleft.y);
+			this->bottomleft.z = std::min(this->bottomleft.z, obj->bottomleft.z);
+		
+			this->topright.x = std::max(this->topright.x, obj->topright.x);
+			this->topright.y = std::max(this->topright.y, obj->topright.y);
+			this->topright.z = std::max(this->topright.z, obj->topright.z);
+		}
 
 		void printcheck(){
 			std::cout<<"\nbottomleft\n";

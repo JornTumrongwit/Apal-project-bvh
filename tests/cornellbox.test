@@ -100,7 +100,7 @@ specular 0.2 0.2 0.2
 pushTransform
 translate 0 -0.7 -1.5
 scale 0.1 0.1 0.1
-sphere 0 0 0 1
+#sphere 0 0 0 1
 popTransform
 
 #sphere2
@@ -109,7 +109,7 @@ specular 0.2 0.2 0.2
 pushTransform
 translate 0.4 -0.9 -1
 scale 0.1 0.1 0.1
-sphere 0 0 0 1
+#sphere 0 0 0 1
 popTransform
 
 #sphere3
@@ -118,7 +118,7 @@ specular 0.2 0.2 0.2
 pushTransform
 translate -0.5 -0.7 -1.5
 scale 0.1 0.1 0.1
-sphere 0 0 0 1
+#sphere 0 0 0 1
 popTransform
 
 #sphere4
@@ -127,7 +127,7 @@ specular 0.2 0.2 0.2
 pushTransform
 translate 0.5 -0.5 -2
 scale 0.3 0.6 0.3
-sphere 0 0 0 1
+#sphere 0 0 0 1
 popTransform
 
 #cube

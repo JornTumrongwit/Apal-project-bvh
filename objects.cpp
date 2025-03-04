@@ -238,32 +238,32 @@ float helper_neg(mymat4 m4, int i){
 	return (back - sqrtf(back * back - (bottom * front))) / bottom;
 }
 
-void Sphere::Bound(myvec3* bottomleft, myvec3* topright){
+void Sphere::Bound(){
 	mymat4 s_mat_inv = mymat4(1/this->radius);
 	s_mat_inv.content[3][3] = -1.f;
 
 	mymat4 R = this->transform * s_mat_inv * transpose(this->transform);
-	topright->x = helper_neg(R, 0);
-	topright->y = helper_neg(R, 1);
-	topright->z = helper_neg(R, 2);
+	this->topright.x = helper_neg(R, 0);
+	this->topright.y = helper_neg(R, 1);
+	this->topright.z = helper_neg(R, 2);
 
-	bottomleft->x = helper_pos(R, 0);
-	bottomleft->y = helper_pos(R, 1);
-	bottomleft->z = helper_pos(R, 2);
+	this->bottomleft.x = helper_pos(R, 0);
+	this->bottomleft.y = helper_pos(R, 1);
+	this->bottomleft.z = helper_pos(R, 2);
 }
 
-void Triangle::Bound(myvec3* bottomleft, myvec3* topright){
-	bottomleft->x = std::min(this->vertA.x, this->vertB.x);
-	bottomleft->x = std::min(bottomleft->x, this->vertC.x);
-	bottomleft->y = std::min(this->vertA.y, this->vertB.y);
-	bottomleft->y = std::min(bottomleft->y, this->vertC.y);
-	bottomleft->z = std::min(this->vertA.z, this->vertB.z);
-	bottomleft->z = std::min(bottomleft->z, this->vertC.z);
+void Triangle::Bound(){
+	this->bottomleft.x = std::min(this->vertA.x, this->vertB.x);
+	this->bottomleft.x = std::min(this->bottomleft.x, this->vertC.x);
+	this->bottomleft.y = std::min(this->vertA.y, this->vertB.y);
+	this->bottomleft.y = std::min(this->bottomleft.y, this->vertC.y);
+	this->bottomleft.z = std::min(this->vertA.z, this->vertB.z);
+	this->bottomleft.z = std::min(this->bottomleft.z, this->vertC.z);
 
-	topright->x = std::max(this->vertA.x, this->vertB.x);
-	topright->x = std::max(topright->x, this->vertC.x);
-	topright->y = std::max(this->vertA.y, this->vertB.y);
-	topright->y = std::max(topright->y, this->vertC.y);
-	topright->z = std::max(this->vertA.z, this->vertB.z);
-	topright->z = std::max(topright->z, this->vertC.z);
+	this->topright.x = std::max(this->vertA.x, this->vertB.x);
+	this->topright.x = std::max(this->topright.x, this->vertC.x);
+	this->topright.y = std::max(this->vertA.y, this->vertB.y);
+	this->topright.y = std::max(this->topright.y, this->vertC.y);
+	this->topright.z = std::max(this->vertA.z, this->vertB.z);
+	this->topright.z = std::max(this->topright.z, this->vertC.z);
 }
