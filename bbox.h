@@ -3,28 +3,27 @@
 #include "libmorton/morton.h"
 #include "objects.h"
 #include <iostream>
+#include <span> 
+
+enum AXIS { X, Y, Z };
 
 //bounding box
 //We'll implement the top-down construction
-
+//Let's only work with triangles
 class BBox{
 	public:
 		bool isleaf;
-		int max_obj_amt;
-		Object* obj;
-		BBox* child_A;
-		BBox* child_B;
+		int max_obj_amt = 5;
+		int offset = -1;
+		int amt;
+		BBox* child[2];
 
 		//Splits this current box into 2 nodes
 		virtual void split(){
 			return;
 		}
 
-		BBox(){
-			obj = nullptr;
-			child_A = nullptr;
-			child_B = nullptr;
-		};
+		BBox() = default;
 
 		BBox(int max_amt){
 			BBox();
@@ -35,12 +34,16 @@ class BBox{
 		// 	return;
 		// }
 
+		virtual void splitRecursion(AXIS a, std::span<Triangle> tri_span, int offset){
+			return;
+		}
+
 		virtual void printcheck(){
 			std::cout<<"Default box abstract\n";
 		};
 
 		
-		virtual void unionBounds(Object* obj){
+		virtual void unionBounds(Triangle obj){
 			return;
 		}
 };
@@ -54,15 +57,20 @@ class SimpleBBox: public BBox{
 		//void traverse(float& closest, myvec3* raydir, myvec3& normal, myvec3*& point_int, myvec3* position);
 
 		SimpleBBox() = default;
+
+		SimpleBBox(int max_amt){
+			SimpleBBox();
+			this->max_obj_amt = max_amt;
+		}
 		
-		void unionBounds(Object* obj){
-			this->bottomleft.x = std::min(this->bottomleft.x, obj->bottomleft.x);
-			this->bottomleft.y = std::min(this->bottomleft.y, obj->bottomleft.y);
-			this->bottomleft.z = std::min(this->bottomleft.z, obj->bottomleft.z);
+		void unionBounds(Triangle obj){
+			this->bottomleft.x = std::min(this->bottomleft.x, obj.bottomleft.x);
+			this->bottomleft.y = std::min(this->bottomleft.y, obj.bottomleft.y);
+			this->bottomleft.z = std::min(this->bottomleft.z, obj.bottomleft.z);
 		
-			this->topright.x = std::max(this->topright.x, obj->topright.x);
-			this->topright.y = std::max(this->topright.y, obj->topright.y);
-			this->topright.z = std::max(this->topright.z, obj->topright.z);
+			this->topright.x = std::max(this->topright.x, obj.topright.x);
+			this->topright.y = std::max(this->topright.y, obj.topright.y);
+			this->topright.z = std::max(this->topright.z, obj.topright.z);
 		}
 
 		void printcheck(){
@@ -72,5 +80,9 @@ class SimpleBBox: public BBox{
 			printvec3(topright);
 			std::cout<<"\n";
 		}
+
+		void split();
+
+		void splitRecursion(AXIS a, std::span<Triangle> tri_span, int offset);
 };
 

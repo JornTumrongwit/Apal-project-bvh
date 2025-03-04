@@ -28,13 +28,14 @@ void saveScreenshot(string fname) {
 
   pix.resize(w*h);
 
-  // BBox* sBB = new SimpleBBox();
+  BBox* sBB = new SimpleBBox();
 
-  // //BBox construct
-  // for (Object* obj: ObjectList){
-  //   sBB->unionBounds(obj);
-  // }
-  // sBB->printcheck();
+  //BBox construct
+  for (Triangle tri: TriangleList){
+    sBB->unionBounds(tri);
+  }
+  sBB->split();
+
   #pragma omp parallel for
   for (int j = h-1; j >=0; j--) {
       for (int i = 0; i < w; i++) {
@@ -78,11 +79,6 @@ int main(int argc, char* argv[]) {
     Sphere* sph = &SphereList[i];
     Object* obj = sph;
     ObjectList.push_back(obj);
-  }
-
-  for(Object* obj: ObjectList){
-    printvec3(obj->centroid());
-    std::cout<<obj<<"\n";
   }
   std::cout<<"File read\n";
   saveScreenshot("../output/out.ppm");

@@ -49,6 +49,9 @@ public:
 	bool CheckIntersect(float& closest, myvec3* raydir, myvec3& normal, myvec3*& point_int, myvec3* position);
 	bool blockCheck(float closest, myvec3 raydir, myvec3 position);
 	void Bound();
+	myvec3 centroid(){
+		return (bottomleft + topright)*0.5f;
+	};
 };
 
 class Triangle : public Object {
@@ -62,4 +65,7 @@ public:
 	bool CheckIntersect(float& closest, myvec3* raydir, myvec3& normal, myvec3*& point_int, myvec3* position);
 	bool blockCheck(float closest, myvec3 raydir, myvec3 position);
 	void Bound();
+	myvec3 centroid(){
+		return (bottomleft + topright)*0.5f;
+	};
 };
