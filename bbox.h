@@ -18,6 +18,7 @@ class BBox{
 		int offset = -1;
 		int amt = -1;
 		BBox* child[2];
+		int axis;
 
 		myvec3 centleft;
 		myvec3 centright;

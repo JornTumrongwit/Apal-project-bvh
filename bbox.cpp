@@ -46,13 +46,15 @@ bool SimpleBBox::traverseRecursive(float& closest, myvec3* raydir, myvec3& norma
     }
 
     //proceed with traverse
-    //First, check left
-    bool c0 = child[0]->traverseRecursive(closest, raydir, normal, point_int, position, inv_dir, obj, t_far);
-    intersected = intersected || c0;
-    //then, check right
-    bool c1 = child[1]->traverseRecursive(closest, raydir, normal, point_int, position, inv_dir, obj, t_far);
-    intersected = intersected || c1;
-
+    //We check which traversal to pick first by checking the splitting axis positive/negative values
+    if ((*raydir)[this->axis] >= 0){
+        intersected = child[0]->traverseRecursive(closest, raydir, normal, point_int, position, inv_dir, obj, t_far) || intersected;
+        intersected = child[1]->traverseRecursive(closest, raydir, normal, point_int, position, inv_dir, obj, t_far) || intersected;
+    }
+    else{
+        intersected = child[1]->traverseRecursive(closest, raydir, normal, point_int, position, inv_dir, obj, t_far) || intersected;
+        intersected = child[0]->traverseRecursive(closest, raydir, normal, point_int, position, inv_dir, obj, t_far) || intersected;
+    }
     //std::cout<<"returning node traversal as " << intersected << "\n";
     return intersected;
 }
@@ -88,15 +90,15 @@ bool SimpleBBox::traverse(float& closest, myvec3* raydir, myvec3& normal, myvec3
 void SimpleBBox::splitRecursion(std::span<Triangle> tri_span, int offset){
     //Find which axis
     myvec3 axes = centright - centleft;
-    AXIS a = X;
+    this->axis = 0;
     if (axes.y > axes.x){
         if (axes.z > axes.y) {
-            a = Z;
+            this->axis = 2;
         }
-        else a = Y;
+        else this->axis = 1;
     }
     else if (axes.z > axes.x){
-        a = Z;
+        this->axis = 2;
     }
 
     //if nothing here, why bother
@@ -118,17 +120,14 @@ void SimpleBBox::splitRecursion(std::span<Triangle> tri_span, int offset){
         // std::cout<<"\n\n";
         return;
     }
-    
-    int i = 0;
-    if(a == Y) i = 1;
-    if(a == Z) i = 2;
     //find midpoint
-    float midpoint = (centright[i] + centleft[i]) / 2;
+    float midpoint = (centright[this->axis] + centleft[this->axis]) / 2;
 
     //case to run
     //Run mid split first, then centroid balancing
     int splitmethod = 1;
     int mid;
+    int i = this->axis;
     switch(splitmethod){
         case 1:{
             //Partition based on center of axis

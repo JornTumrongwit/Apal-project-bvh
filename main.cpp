@@ -51,7 +51,8 @@ void saveScreenshot(string fname) {
   //   printvec3(tri.centroid());
   //   std::cout<<"\n";
   // }
-  
+
+  std::cout<<"Setup complete, running renders\n";
   #pragma omp parallel for
   for (int j = h-1; j >=0; j--) {
       for (int i = 0; i < w; i++) {
