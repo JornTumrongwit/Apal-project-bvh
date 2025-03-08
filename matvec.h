@@ -68,6 +68,8 @@ myvec3 operator*(myvec3 vector, float input);
 myvec4 operator*(myvec4 vector, float input);
 myvec3 operator*(myvec3 vector, myvec3 input);
 myvec4 operator*(myvec4 vector, myvec4 input);
+myvec3 operator/(myvec3 vector, myvec3 input);
+myvec4 operator/(myvec4 vector, myvec4 input);
 
 myvec4 operator+(myvec4 vec1, myvec4 vec2);
 myvec4 operator+(myvec4 vec1, myvec3 vec2);

@@ -266,4 +266,15 @@ void Triangle::Bound(){
 	this->topright.y = std::max(this->topright.y, this->vertC.y);
 	this->topright.z = std::max(this->vertA.z, this->vertB.z);
 	this->topright.z = std::max(this->topright.z, this->vertC.z);
+	// std::cout<<"Triangle vertices: ";
+	// printvec4(vertA);
+	// std::cout<<", ";
+	// printvec4(vertB);
+	// std::cout<<", ";
+	// printvec4(vertC);
+	// std::cout<<"\nTriangle bound: ";
+	// printvec3(bottomleft);
+	// std::cout<<", ";
+	// printvec3(topright);
+	// std::cout<<"\n\n";
 }

@@ -1,6 +1,7 @@
 #include "Transform.h"
 #include "raytracer.h"
 #include "variables.h"
+#include "bbox.h"
 #include <cmath>
 #include <math.h>
 #include <algorithm>
@@ -25,12 +26,20 @@ myvec3 raytracer(myvec3 raydir, myvec3 position, float depth)
 	myvec3 pixels = myvec3(0, 0, 0);
 	float closest = std::numeric_limits<float>::max();
 	SHAPE intersect = NONE;
-	for (Object* testObj : ObjectList) {
-		if(testObj->CheckIntersect(closest, &raydir, tempnormal, inter, &position)){
-			intersect = testObj -> poly_type;
-			hitObj = testObj;
-		}
+
+	int tri_index = -1;
+	if(BoundingBox->traverse(closest, &raydir, tempnormal, inter, &position, tri_index)){
+		//std::cout<<"complete ";
+		intersect = TRIANGLE;
+		hitObj = &TriangleList[tri_index];
+		//std::cout<<tri_index<<", "<<closest<< ", " << hitObj->diffuse[0] <<"\n";
 	}
+	// for (Object* testObj : ObjectList) {
+	// 	if(testObj->CheckIntersect(closest, &raydir, tempnormal, inter, &position)){
+	// 		intersect = testObj -> poly_type;
+	// 		hitObj = testObj;
+	// 	}
+	// }
 	// for (Sphere testSphere : SphereList) {
 	// 	if(testSphere.CheckIntersect(closest, &raydir, tempnormal, inter, &position)){
 	// 		intersect = SPHERE;
@@ -44,6 +53,8 @@ myvec3 raytracer(myvec3 raydir, myvec3 position, float depth)
 	// 	}
 	// }
 	if (intersect == TRIANGLE) {
+		//for checking intersections only
+		//return myvec3(1, 1, 1);
 		get_color_tri(raydir, point_int, static_cast<Triangle*>(hitObj), position, tempnormal, pixels, depth);
 	}
 	else if (intersect == SPHERE) {

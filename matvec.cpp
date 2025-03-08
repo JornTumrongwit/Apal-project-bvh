@@ -290,6 +290,12 @@ mymat3 operator-(mymat3 mat1, mymat3 mat2) {
 		mat1.content[2][0] - mat2.content[2][0], mat1.content[2][1] - mat2.content[2][1], mat1.content[2][2] - mat2.content[2][2]
 	);
 }
+myvec3 operator/(myvec3 vec1, myvec3 vec2){
+	return myvec3(vec1.x / vec2.x, vec1.y / vec2.y, vec1.z / vec2.z);
+}
+myvec4 operator/(myvec4 vec1, myvec4 vec2){
+	return myvec4(vec1.x / vec2.x, vec1.y / vec2.y, vec1.z / vec2.z, vec1.w / vec2.w);
+}
 
 float dot(myvec4 vec1, myvec4 vec2) {
 	return vec1.x * vec2.x + vec1.y * vec2.y + vec1.z * vec2.z + vec1.w * vec2.w;
@@ -363,8 +369,8 @@ float distance(myvec3 a, myvec3 b) {
 }
 
 void printvec3(myvec3 inp){
-  std::clog<<"("<<inp.x<<", "<<inp.y<<", "<<inp.z<<")";
+  std::cout<<"("<<inp.x<<", "<<inp.y<<", "<<inp.z<<")";
 }
 void printvec4(myvec4 inp){
-  std::clog<<"("<<inp.x<<", "<<inp.y<<", "<<inp.z<<", "<<inp.w<<")";
+  std::cout<<"("<<inp.x<<", "<<inp.y<<", "<<inp.z<<", "<<inp.w<<")";
 }

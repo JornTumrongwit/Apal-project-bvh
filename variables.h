@@ -10,6 +10,7 @@
 #include<stdexcept>
 #include "matvec.h"
 #include "objects.h"
+#include "bbox.h"
 
 #ifdef MAINPROGRAM 
 #define EXTERN 
@@ -66,3 +67,4 @@ EXTERN std::vector<Sphere> SphereList;
 EXTERN std::vector<Triangle> TriangleList;
 EXTERN std::vector<Object*> ObjectList;
 EXTERN std::vector<myvec4> vertices;
+EXTERN BBox* BoundingBox;

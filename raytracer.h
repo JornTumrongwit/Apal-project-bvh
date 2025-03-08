@@ -1,4 +1,5 @@
 #include "objects.h"
+#include "bbox.h"
 
 myvec3 raytracer(myvec3 raydir, myvec3 position, float depth);
 myvec3 ComputeLight(myvec3 direction, myvec3 lightcolor, myvec3 normal, myvec3 halfvec, myvec3 mydiffuse, myvec3 myspecular, float myshininess);\

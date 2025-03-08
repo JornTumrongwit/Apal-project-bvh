@@ -61,7 +61,6 @@ public:
 	myvec4 vertC;
 	myvec3 normal;
 
-	Triangle() = default;
 	bool CheckIntersect(float& closest, myvec3* raydir, myvec3& normal, myvec3*& point_int, myvec3* position);
 	bool blockCheck(float closest, myvec3 raydir, myvec3 position);
 	void Bound();
