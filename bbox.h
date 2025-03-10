@@ -55,6 +55,13 @@ class BBox{
 		virtual void unionBounds(Triangle obj){
 			return;
 		}
+
+		virtual bool blockingTraverse(float closest, myvec3 raydir, myvec3 position){
+			return false;
+		}
+		virtual bool blockingTraverseRecursive(float closest, myvec3 raydir, myvec3 position, myvec3 inv_dir){
+			return false;
+		}
 };
 
 //Simple box using vec3 as the coordinates
@@ -64,6 +71,9 @@ class SimpleBBox: public BBox{
 		myvec3 topright;
 
 		bool traverse(float& closest, myvec3* raydir, myvec3& normal, myvec3*& point_int, myvec3* position, int& obj);
+
+		bool blockingTraverseRecursive(float closest, myvec3 raydir, myvec3 position, myvec3 inv_dir);
+		bool blockingTraverse(float closest, myvec3 raydir, myvec3 position);
 
 		SimpleBBox(){
 			bottomleft = myvec3(FLT_MAX, FLT_MAX, FLT_MAX);

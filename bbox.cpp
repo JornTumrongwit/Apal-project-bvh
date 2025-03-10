@@ -37,7 +37,7 @@ bool SimpleBBox::traverseRecursive(float& closest, myvec3* raydir, myvec3& norma
                 //std::cout<<"Intersection found\n";
                 intersected = true;
                 obj = i;
-                t_far = this_t_far;
+                t_far = closest;
             }
         }
         //if it intersects smth, return true
@@ -84,6 +84,81 @@ bool SimpleBBox::traverse(float& closest, myvec3* raydir, myvec3& normal, myvec3
     //std::cout<<"Begin Traversal\n";
     //If there is an intersection, continue with the recursive version
     return this->traverseRecursive(closest, raydir, normal, point_int, position, inv_dir, obj, t_far);
+}
+
+bool SimpleBBox::blockingTraverseRecursive(float closest, myvec3 raydir, myvec3 position, myvec3 inv_dir){
+    //First, check if the ray intersects this box
+    //slab method
+    myvec3 t_low =  (this->bottomleft - position) * inv_dir;
+    myvec3 t_high =  (this->topright - position) * inv_dir;
+
+    myvec3 t_min = myvec3(t_low.x, t_low.y, t_low.z);
+    myvec3 t_max = myvec3(t_high.x, t_high.y, t_high.z);
+
+    t_min.x = std::min(t_low.x, t_high.x);
+    t_min.y = std::min(t_low.y, t_high.y);
+    t_min.z = std::min(t_low.z, t_high.z);
+    t_max.x = std::max(t_low.x, t_high.x);
+    t_max.y = std::max(t_low.y, t_high.y);
+    t_max.z = std::max(t_low.z, t_high.z);
+
+    float t_close = std::max(t_min.x, std::max(t_min.y, t_min.z));
+    float this_t_far = std::min(closest, std::min(t_max.x, std::min(t_max.y, t_max.z)));
+
+    // if t_far < t_close, no intersection or already found smth closer
+    if(this_t_far <= t_close) return true;
+
+    //if this is a leaf, check the prims
+    if(amt > 0){
+        for(Triangle tri: TriangleList){
+            //Triangle tri = TriangleList[i];
+            if(!tri.blockCheck(closest, raydir, position)) return false;
+        }
+        return true;
+    }
+
+    //proceed with traverse
+    //We check which traversal to pick first by checking the splitting axis positive/negative values
+    if ((raydir)[this->axis] >= 0){
+        if(child[0]->blockingTraverseRecursive(closest, raydir, position, inv_dir)){
+            return child[1]->blockingTraverseRecursive(closest, raydir, position, inv_dir);
+        }
+        else return false;
+    }
+    else{
+        if(child[1]->blockingTraverseRecursive(closest, raydir, position, inv_dir)){
+            return child[0]->blockingTraverseRecursive(closest, raydir, position, inv_dir);
+        }
+        else return false;
+    }
+    return true;
+}
+
+bool SimpleBBox::blockingTraverse(float closest, myvec3 raydir, myvec3 position){
+    //First, check if the ray intersects this box
+    //slab method
+    myvec3 inv_dir = myvec3(1 / raydir.x, 1 / raydir.y, 1 / raydir.z);
+    myvec3 t_low =  (this->bottomleft - position)*inv_dir;
+    myvec3 t_high =  (this->topright - position)*inv_dir;
+
+    myvec3 t_min = myvec3(t_low.x, t_low.y, t_low.z);
+    myvec3 t_max = myvec3(t_high.x, t_high.y, t_high.z);
+
+    t_min.x = std::min(t_low.x, t_high.x);
+    t_min.y = std::min(t_low.y, t_high.y);
+    t_min.z = std::min(t_low.z, t_high.z);
+    t_max.x = std::max(t_low.x, t_high.x);
+    t_max.y = std::max(t_low.y, t_high.y);
+    t_max.z = std::max(t_low.z, t_high.z);
+
+    float t_near = std::max(t_min.x, std::max(t_min.y, t_min.z));
+    float t_far = std::min(closest, std::min(t_max.x, std::min(t_max.y, t_max.z)));
+
+    // if t_far < t_close, no intersection
+    if(t_far < t_near) return false;
+    //std::cout<<"Begin Traversal\n";
+    //If there is an intersection, continue with the recursive version
+    return this->blockingTraverseRecursive(closest, raydir, position, inv_dir);
 }
 
 //Naive splitting function
