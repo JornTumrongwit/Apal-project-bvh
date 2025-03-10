@@ -16,6 +16,7 @@ struct myvec3 {
 		if (ItemKey == 2) return this->z;
 		else throw std::out_of_range("Accessing myvec3 with value > 2 or < 0");
 	}
+	myvec3 copy();
 };
 
 struct myvec4 {

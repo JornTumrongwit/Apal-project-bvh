@@ -52,6 +52,8 @@ void saveScreenshot(string fname) {
   //   std::cout<<"\n";
   // }
 
+  BoundingBox->compact();
+
   std::cout<<"Setup complete, running renders\n";
   #pragma omp parallel for
   for (int j = h-1; j >=0; j--) {

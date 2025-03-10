@@ -2,8 +2,207 @@
 #include "variables.h"
 #include <iostream>
 
+//Bounding Box linear compaction
+void BBox::compact(){
+    int index = compactBBoxes.size();
+    CBB compacted = this->compactor();
+    compactBBoxes.push_back(compacted);
+    if(amt < 0){
+        //compact child 1
+        this->child[0]->compact();
+
+        //save index to child 2
+        compactBBoxes[index].child2 = compactBBoxes.size();
+
+        //compact child 2
+        this->child[1]->compact();
+    }
+}
+
+//giving a compact representation of simple bounding box
+CBB SimpleBBox::compactor(){
+    //Compact Bounding Box
+// struct CBB{
+// 	myvec3 bottomleft;
+// 	myvec3 topright;
+// 	int offset = -1;
+// 	int amt = -1;
+// 	//child 1 context is not need if it's just next to it
+// 	int child2;
+// };
+    CBB cbb;
+    cbb.bottomleft = this->bottomleft.copy();
+    cbb.topright = this->topright.copy();
+    cbb.offset = this->offset;
+    cbb.amt = this->amt;
+    cbb.child2 = -1;
+    cbb.axis = this->axis;
+    return cbb;
+}
+
+bool bboxTraverseRecursive(float& closest, myvec3* raydir, myvec3& normal, myvec3*& point_int, myvec3* position, myvec3 inv_dir, int& obj, float& t_far, int& traverseCount, int offset){
+    //First, check if the ray intersects this box
+    //slab method
+    CBB box = compactBBoxes[offset];
+    myvec3 t_low =  (box.bottomleft - *position) * inv_dir;
+    myvec3 t_high =  (box.topright - *position) * inv_dir;
+
+    myvec3 t_min = myvec3(t_low.x, t_low.y, t_low.z);
+    myvec3 t_max = myvec3(t_high.x, t_high.y, t_high.z);
+
+    t_min.x = std::min(t_low.x, t_high.x);
+    t_min.y = std::min(t_low.y, t_high.y);
+    t_min.z = std::min(t_low.z, t_high.z);
+    t_max.x = std::max(t_low.x, t_high.x);
+    t_max.y = std::max(t_low.y, t_high.y);
+    t_max.z = std::max(t_low.z, t_high.z);
+
+    float t_close = std::max(t_min.x, std::max(t_min.y, t_min.z));
+    float this_t_far = std::min(t_far, std::min(t_max.x, std::min(t_max.y, t_max.z)));
+
+    // if t_far < t_close, no intersection or already found smth closer
+    if(this_t_far < t_close) return false;
+
+    bool intersected = false;
+    //if this is a leaf, check the prims
+    if(box.amt > 0){
+        //std::cout<<"Checking leaf\n";
+        traverseCount++;
+        for(int i = box.offset; i < box.offset+box.amt; i++){
+            Triangle tri = TriangleList[i];
+            //std::cout<<"Check triangle " << i << " out of " << TriangleList.size()<< "\n";
+            if(tri.CheckIntersect(closest, raydir, normal, point_int, position)){
+                //std::cout<<"Intersection found\n";
+                intersected = true;
+                obj = i;
+                t_far = closest;
+            }
+        }
+        //if it intersects smth, return true
+        //std::cout<<"returning leaf traversal as " << intersected << "\n";
+        return intersected;
+    }
+
+    //proceed with traverse
+    //We check which traversal to pick first by checking the splitting axis positive/negative values
+    if ((*raydir)[box.axis] >= 0){
+        intersected = bboxTraverseRecursive(closest, raydir, normal, point_int, position, inv_dir, obj, t_far, traverseCount, offset+1) || intersected;
+        intersected = bboxTraverseRecursive(closest, raydir, normal, point_int, position, inv_dir, obj, t_far, traverseCount, box.child2) || intersected;
+    }
+    else{
+        intersected = bboxTraverseRecursive(closest, raydir, normal, point_int, position, inv_dir, obj, t_far, traverseCount, box.child2) || intersected;
+        intersected = bboxTraverseRecursive(closest, raydir, normal, point_int, position, inv_dir, obj, t_far, traverseCount, offset+1) || intersected;
+    }
+    //std::cout<<"returning node traversal as " << intersected << "\n";
+    return intersected;
+}
+
+//traversing the compact bbox
+bool bboxTraverser(float& closest, myvec3* raydir, myvec3& normal, myvec3*& point_int, myvec3* position, int& obj, int& traverseCount, int offset){
+    //First, check if the ray intersects this box
+    //slab method
+    myvec3 inv_dir = myvec3(1 / raydir->x, 1 / raydir->y, 1 / raydir->z);
+    myvec3 t_low =  (compactBBoxes[offset].bottomleft - *position)*inv_dir;
+    myvec3 t_high =  (compactBBoxes[offset].topright - *position)*inv_dir;
+
+    myvec3 t_min = myvec3(t_low.x, t_low.y, t_low.z);
+    myvec3 t_max = myvec3(t_high.x, t_high.y, t_high.z);
+
+    t_min.x = std::min(t_low.x, t_high.x);
+    t_min.y = std::min(t_low.y, t_high.y);
+    t_min.z = std::min(t_low.z, t_high.z);
+    t_max.x = std::max(t_low.x, t_high.x);
+    t_max.y = std::max(t_low.y, t_high.y);
+    t_max.z = std::max(t_low.z, t_high.z);
+
+    float t_near = std::max(t_min.x, std::max(t_min.y, t_min.z));
+    float t_far = std::min(t_max.x, std::min(t_max.y, t_max.z));
+
+    // if t_far < t_close, no intersection
+    if(t_far < t_near) return false;
+    //std::cout<<"Begin Traversal\n";
+    //If there is an intersection, continue with the recursive version
+    return bboxTraverseRecursive(closest, raydir, normal, point_int, position, inv_dir, obj, t_far, traverseCount, offset);
+}
+
+//visibility checking
+bool cbbBlockRecursive(float closest, myvec3 raydir, myvec3 position, myvec3 inv_dir, int offset){
+    CBB cbb = compactBBoxes[offset];
+    //First, check if the ray intersects this box
+    //slab method
+    myvec3 t_low =  (cbb.bottomleft - position) * inv_dir;
+    myvec3 t_high =  (cbb.topright - position) * inv_dir;
+
+    myvec3 t_min = myvec3(t_low.x, t_low.y, t_low.z);
+    myvec3 t_max = myvec3(t_high.x, t_high.y, t_high.z);
+
+    t_min.x = std::min(t_low.x, t_high.x);
+    t_min.y = std::min(t_low.y, t_high.y);
+    t_min.z = std::min(t_low.z, t_high.z);
+    t_max.x = std::max(t_low.x, t_high.x);
+    t_max.y = std::max(t_low.y, t_high.y);
+    t_max.z = std::max(t_low.z, t_high.z);
+
+    float t_close = std::max(t_min.x, std::max(t_min.y, t_min.z));
+    float this_t_far = std::min(closest, std::min(t_max.x, std::min(t_max.y, t_max.z)));
+
+    // if t_far < t_close, no intersection or light source is closer
+    if(this_t_far < t_close) return true;
+
+    //if this is a leaf, check the prims
+    if(cbb.amt > 0){
+        for(Triangle tri: TriangleList){
+            //Triangle tri = TriangleList[i];
+            if(!tri.blockCheck(closest, raydir, position)) return false;
+        }
+        return true;
+    }
+
+    //proceed with traverse
+    //We check which traversal to pick first by checking the splitting axis positive/negative values
+    if ((raydir)[cbb.axis] >= 0){
+        if(cbbBlockRecursive(closest, raydir, position, inv_dir, offset+1)){
+            return cbbBlockRecursive(closest, raydir, position, inv_dir, cbb.child2);
+        }
+        return false;
+    }
+    else{
+        if(cbbBlockRecursive(closest, raydir, position, inv_dir, cbb.child2)){
+            return cbbBlockRecursive(closest, raydir, position, inv_dir, offset+1);
+        }
+        return false;
+    }
+}
+
+bool cbbBlock(float closest, myvec3 raydir, myvec3 position, int offset){
+    //First, check if the ray intersects this box
+    //slab method
+    myvec3 inv_dir = myvec3(1 / raydir.x, 1 / raydir.y, 1 / raydir.z);
+    myvec3 t_low =  (compactBBoxes[0].bottomleft - position)*inv_dir;
+    myvec3 t_high =  (compactBBoxes[0].topright - position)*inv_dir;
+
+    myvec3 t_min = myvec3(t_low.x, t_low.y, t_low.z);
+    myvec3 t_max = myvec3(t_high.x, t_high.y, t_high.z);
+
+    t_min.x = std::min(t_low.x, t_high.x);
+    t_min.y = std::min(t_low.y, t_high.y);
+    t_min.z = std::min(t_low.z, t_high.z);
+    t_max.x = std::max(t_low.x, t_high.x);
+    t_max.y = std::max(t_low.y, t_high.y);
+    t_max.z = std::max(t_low.z, t_high.z);
+
+    float t_near = std::max(t_min.x, std::max(t_min.y, t_min.z));
+    float t_far = std::min(closest, std::min(t_max.x, std::min(t_max.y, t_max.z)));
+
+    // if t_far < t_close, no intersection
+    if(t_far < t_near) return false;
+    //std::cout<<"Begin Traversal\n";
+    //If there is an intersection, continue with the recursive version
+    return cbbBlockRecursive(closest, raydir, position, inv_dir, offset);
+}
+
 //Simple traversal
-bool SimpleBBox::traverseRecursive(float& closest, myvec3* raydir, myvec3& normal, myvec3*& point_int, myvec3* position, myvec3 inv_dir, int& obj, float& t_far){
+bool SimpleBBox::traverseRecursive(float& closest, myvec3* raydir, myvec3& normal, myvec3*& point_int, myvec3* position, myvec3 inv_dir, int& obj, float& t_far, int& traverseCount){
     //First, check if the ray intersects this box
     //slab method
     myvec3 t_low =  (this->bottomleft - *position) * inv_dir;
@@ -26,10 +225,10 @@ bool SimpleBBox::traverseRecursive(float& closest, myvec3* raydir, myvec3& norma
     if(this_t_far < t_close) return false;
 
     bool intersected = false;
-    
     //if this is a leaf, check the prims
     if(amt > 0){
         //std::cout<<"Checking leaf\n";
+        traverseCount++;
         for(int i = offset; i < offset+amt; i++){
             Triangle tri = TriangleList[i];
             //std::cout<<"Check triangle " << i << " out of " << TriangleList.size()<< "\n";
@@ -48,18 +247,18 @@ bool SimpleBBox::traverseRecursive(float& closest, myvec3* raydir, myvec3& norma
     //proceed with traverse
     //We check which traversal to pick first by checking the splitting axis positive/negative values
     if ((*raydir)[this->axis] >= 0){
-        intersected = child[0]->traverseRecursive(closest, raydir, normal, point_int, position, inv_dir, obj, t_far) || intersected;
-        intersected = child[1]->traverseRecursive(closest, raydir, normal, point_int, position, inv_dir, obj, t_far) || intersected;
+        intersected = child[0]->traverseRecursive(closest, raydir, normal, point_int, position, inv_dir, obj, t_far, traverseCount) || intersected;
+        intersected = child[1]->traverseRecursive(closest, raydir, normal, point_int, position, inv_dir, obj, t_far, traverseCount) || intersected;
     }
     else{
-        intersected = child[1]->traverseRecursive(closest, raydir, normal, point_int, position, inv_dir, obj, t_far) || intersected;
-        intersected = child[0]->traverseRecursive(closest, raydir, normal, point_int, position, inv_dir, obj, t_far) || intersected;
+        intersected = child[1]->traverseRecursive(closest, raydir, normal, point_int, position, inv_dir, obj, t_far, traverseCount) || intersected;
+        intersected = child[0]->traverseRecursive(closest, raydir, normal, point_int, position, inv_dir, obj, t_far, traverseCount) || intersected;
     }
     //std::cout<<"returning node traversal as " << intersected << "\n";
     return intersected;
 }
 
-bool SimpleBBox::traverse(float& closest, myvec3* raydir, myvec3& normal, myvec3*& point_int, myvec3* position, int& obj){
+bool SimpleBBox::traverse(float& closest, myvec3* raydir, myvec3& normal, myvec3*& point_int, myvec3* position, int& obj, int& traverseCount){
     //First, check if the ray intersects this box
     //slab method
     myvec3 inv_dir = myvec3(1 / raydir->x, 1 / raydir->y, 1 / raydir->z);
@@ -83,7 +282,7 @@ bool SimpleBBox::traverse(float& closest, myvec3* raydir, myvec3& normal, myvec3
     if(t_far < t_near) return false;
     //std::cout<<"Begin Traversal\n";
     //If there is an intersection, continue with the recursive version
-    return this->traverseRecursive(closest, raydir, normal, point_int, position, inv_dir, obj, t_far);
+    return this->traverseRecursive(closest, raydir, normal, point_int, position, inv_dir, obj, t_far, traverseCount);
 }
 
 bool SimpleBBox::blockingTraverseRecursive(float closest, myvec3 raydir, myvec3 position, myvec3 inv_dir){

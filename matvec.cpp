@@ -374,3 +374,7 @@ void printvec3(myvec3 inp){
 void printvec4(myvec4 inp){
   std::cout<<"("<<inp.x<<", "<<inp.y<<", "<<inp.z<<", "<<inp.w<<")";
 }
+
+myvec3 myvec3::copy(){
+	return myvec3(this->x, this->y, this->z);
+}

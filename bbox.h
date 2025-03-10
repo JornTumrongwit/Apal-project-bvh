@@ -8,6 +8,17 @@
 #define FLT_MAX          3.402823466e+38F 
 enum AXIS { X, Y, Z };
 
+//Compact Bounding Box
+struct CBB{
+	myvec3 bottomleft;
+	myvec3 topright;
+	int offset = -1;
+	int amt = -1;
+	//child 1 context is not need if it's just next to it
+	int child2;
+	int axis;
+};
+
 //bounding box
 //We'll implement the top-down construction
 //Let's only work with triangles
@@ -35,11 +46,11 @@ class BBox{
 			max_obj_amt = max_amt;
 		};
 		
-		virtual bool traverse(float& closest, myvec3* raydir, myvec3& normal, myvec3*& point_int, myvec3* position, int& obj){
+		virtual bool traverse(float& closest, myvec3* raydir, myvec3& normal, myvec3*& point_int, myvec3* position, int& obj, int& traverseCount){
 			return false;
 		}
 
-		virtual bool traverseRecursive(float& closest, myvec3* raydir, myvec3& normal, myvec3*& point_int, myvec3* position, myvec3 inv_dir, int& obj, float& t_far){
+		virtual bool traverseRecursive(float& closest, myvec3* raydir, myvec3& normal, myvec3*& point_int, myvec3* position, myvec3 inv_dir, int& obj, float& t_far, int& traverseCount){
 			return false;
 		}
 
@@ -62,6 +73,13 @@ class BBox{
 		virtual bool blockingTraverseRecursive(float closest, myvec3 raydir, myvec3 position, myvec3 inv_dir){
 			return false;
 		}
+
+		virtual CBB compactor(){
+			CBB cbb;
+			return cbb;
+		};
+
+		void compact();
 };
 
 //Simple box using vec3 as the coordinates
@@ -70,7 +88,8 @@ class SimpleBBox: public BBox{
 		myvec3 bottomleft;
 		myvec3 topright;
 
-		bool traverse(float& closest, myvec3* raydir, myvec3& normal, myvec3*& point_int, myvec3* position, int& obj);
+		bool traverse(float& closest, myvec3* raydir, myvec3& normal, myvec3*& point_int, myvec3* position, int& obj, int& traverseCount);
+		bool traverseRecursive(float& closest, myvec3* raydir, myvec3& normal, myvec3*& point_int, myvec3* position, myvec3 inv_dir, int& obj, float& t_far, int& traverseCount);
 
 		bool blockingTraverseRecursive(float closest, myvec3 raydir, myvec3 position, myvec3 inv_dir);
 		bool blockingTraverse(float closest, myvec3 raydir, myvec3 position);
@@ -110,7 +129,10 @@ class SimpleBBox: public BBox{
 		void bounding(std::span<Triangle> tri_span);
 
 		void splitRecursion(std::span<Triangle> tri_span, int offset);
-
-		bool traverseRecursive(float& closest, myvec3* raydir, myvec3& normal, myvec3*& point_int, myvec3* position, myvec3 inv_dir, int& obj, float& t_far);
+		CBB compactor();
 };
 
+bool bboxTraverser(float& closest, myvec3* raydir, myvec3& normal, myvec3*& point_int, myvec3* position, int& obj, int& traverseCount, int offset);
+bool bboxTraverseRecursive(float& closest, myvec3* raydir, myvec3& normal, myvec3*& point_int, myvec3* position, myvec3 inv_dir, int& obj, float& t_far, int& traverseCount, int offset);
+bool cbbBlock(float closest, myvec3 raydir, myvec3 position, int offset);
+bool cbbBlockRecursive(float closest, myvec3 raydir, myvec3 position, myvec3 inv_dir, int offset);

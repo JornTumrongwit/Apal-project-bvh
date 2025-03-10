@@ -28,11 +28,14 @@ myvec3 raytracer(myvec3 raydir, myvec3 position, float depth)
 	SHAPE intersect = NONE;
 
 	int tri_index = -1;
-	if(BoundingBox->traverse(closest, &raydir, tempnormal, inter, &position, tri_index)){
+	int traverseCount = 0;
+	if(bboxTraverser(closest, &raydir, tempnormal, inter, &position, tri_index, traverseCount, 0)){
 		//std::cout<<"complete ";
 		intersect = TRIANGLE;
 		hitObj = &TriangleList[tri_index];
 		//std::cout<<tri_index<<", "<<closest<< ", " << hitObj->diffuse[0] <<"\n";
+		//int size = TriangleList.size();
+		//return myvec3(((float) traverseCount)/size * 10, ((float) traverseCount)/size* 10, ((float) traverseCount)/size* 10);
 	}
 	// for (Object* testObj : ObjectList) {
 	// 	if(testObj->CheckIntersect(closest, &raydir, tempnormal, inter, &position)){
@@ -168,7 +171,8 @@ bool blockCheck(float closest, myvec3 raydir, myvec3 position){
 	// for (Triangle testTriangle : TriangleList) {
 	// 	if (!testTriangle.blockCheck(closest, raydir, position)) return false;
 	// }
-	return BoundingBox->blockingTraverse(closest, raydir, position);
+	//return BoundingBox->blockingTraverse(closest, raydir, position);
+	return cbbBlock(closest, raydir, position, 0);
 	//return true;
 }
 
