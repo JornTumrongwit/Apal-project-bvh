@@ -8,6 +8,13 @@
 #define FLT_MAX          3.402823466e+38F 
 enum AXIS { X, Y, Z };
 
+//Objects Morton'd
+struct mortonObj{
+	uint_fast32_t morton;
+	//offset to the actual thing
+	int offset;
+};
+
 //Compact Bounding Box
 struct CBB{
 	myvec3 bottomleft;
@@ -129,6 +136,56 @@ class SimpleBBox: public BBox{
 		void bounding(std::span<Triangle> tri_span);
 
 		void splitRecursion(std::span<Triangle> tri_span, int offset);
+		CBB compactor();
+};
+
+//Morton-based box
+class MortonBBox: public BBox{
+	public:
+		myvec3 bottomleft;
+		myvec3 topright;
+
+		bool traverse(float& closest, myvec3* raydir, myvec3& normal, myvec3*& point_int, myvec3* position, int& obj, int& traverseCount);
+		bool traverseRecursive(float& closest, myvec3* raydir, myvec3& normal, myvec3*& point_int, myvec3* position, myvec3 inv_dir, int& obj, float& t_far, int& traverseCount);
+
+		bool blockingTraverseRecursive(float closest, myvec3 raydir, myvec3 position, myvec3 inv_dir);
+		bool blockingTraverse(float closest, myvec3 raydir, myvec3 position);
+
+		MortonBBox(){
+			bottomleft = myvec3(FLT_MAX, FLT_MAX, FLT_MAX);
+			topright = myvec3(-FLT_MAX, -FLT_MAX, -FLT_MAX);
+		}
+
+		MortonBBox(int max_amt){
+			MortonBBox();
+			this->max_obj_amt = max_amt;
+		}
+		
+		void unionBounds(Triangle obj){
+			this->bottomleft.x = std::min(this->bottomleft.x, obj.bottomleft.x);
+			this->bottomleft.y = std::min(this->bottomleft.y, obj.bottomleft.y);
+			this->bottomleft.z = std::min(this->bottomleft.z, obj.bottomleft.z);
+		
+			this->topright.x = std::max(this->topright.x, obj.topright.x);
+			this->topright.y = std::max(this->topright.y, obj.topright.y);
+			this->topright.z = std::max(this->topright.z, obj.topright.z);
+		}
+
+		void printcheck(){
+			std::cout<<"\nbottomleft\n";
+			printvec3(bottomleft);
+			std::cout<<"\ntopright\n";
+			printvec3(topright);
+			std::cout<<"\n";
+		}
+
+		//This was badly thought out. Anyways. Construct is split now.
+		void split();
+
+		void centroidBounding(std::span<Triangle> triangles);
+
+		void bounding(std::span<Triangle> tri_span);
+
 		CBB compactor();
 };
 

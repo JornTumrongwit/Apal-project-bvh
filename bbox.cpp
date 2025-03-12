@@ -501,3 +501,40 @@ void SimpleBBox::bounding(std::span<Triangle> tri_span){
         unionBounds(tri);
     }
 }
+
+void MortonBBox::split(){
+    //find the min/max
+    myvec3 min = myvec3(FLT_MAX, FLT_MAX, FLT_MAX);
+    myvec3 max = myvec3(FLT_MIN, FLT_MIN, FLT_MIN);
+    for(Triangle tri: TriangleList){
+        tri.Bound();
+        myvec3 centroid = tri.centroid();
+        min.x = std::min(min.x, centroid.x);
+        min.y = std::min(min.y, centroid.y);
+        min.z = std::min(min.z, centroid.z);
+
+        max.x = std::max(max.x, centroid.x);
+        max.y = std::max(max.y, centroid.y);
+        max.z = std::max(max.z, centroid.z);
+    }
+
+    int maxval = 2047;
+    //store
+    std::vector<mortonObj> mObj;
+    for(int i = 0; i<TriangleList.size(); i++){
+        Triangle tri = TriangleList[i];
+        myvec3 centroid = tri.centroid();
+        myvec3 normalized = myvec3((((centroid.x - min.x) / (max.x-min.x))* maxval), 
+                                    (((centroid.y - min.y) / (max.y-min.y))* maxval),
+                                    (((centroid.z - min.z) / (max.z-min.z))* maxval));
+        mortonObj mo;
+        mo.morton = libmorton::morton3D_32_encode((int) normalized.x, (int) normalized.y, (int) normalized.z);
+        mo.offset = i;
+        mObj.push_back(mo);
+    }
+    //make a vector of all triangles
+    std::vector<mortonObj> mObj;
+    for(Triangle tri: TriangleList){
+
+    }
+}
