@@ -1,6 +1,7 @@
 #include "bbox.h"
 #include "variables.h"
 #include <iostream>
+#include <bitset>
 
 //Bounding Box linear compaction
 void BBox::compact(){
@@ -532,9 +533,42 @@ void MortonBBox::split(){
         mo.offset = i;
         mObj.push_back(mo);
     }
-    //make a vector of all triangles
-    std::vector<mortonObj> mObj;
-    for(Triangle tri: TriangleList){
 
+    //radix sort, yoinked from the book
+    std::vector<mortonObj> tempVector(mObj.size());
+    constexpr int bitsPerPass = 6;
+    constexpr int nBits = 30;
+    constexpr int nPasses = nBits / bitsPerPass;
+    for (int pass = 0; pass < nPasses; ++pass) {
+        //lowest bit in this pass
+        int lowBit = pass * bitsPerPass;
+        // in/out vector
+        std::vector<mortonObj> &in = (pass & 1) ? tempVector : mObj;
+        std::vector<mortonObj> &out = (pass & 1) ? mObj : tempVector;
+        //number of items in each bucket
+        constexpr int nBuckets = 1 << bitsPerPass;
+        int bucketCount[nBuckets] = { 0 };
+        constexpr int bitMask = (1 << bitsPerPass) - 1;
+        for (const mortonObj &mp : in) {
+            int bucket = (mp.morton >> lowBit) & bitMask;
+            ++bucketCount[bucket];
+        }
+        // for(int buck: bucketCount){
+        //     std::cout<<buck<<"\n";
+        // }
+        // std::cout<<"\n";
+
+        //the index for each item
+        int outIndex[nBuckets];
+        outIndex[0] = 0;
+        for (int i = 1; i < nBuckets; ++i)
+            outIndex[i] = outIndex[i - 1] + bucketCount[i - 1];
+            
+        for (const mortonObj &mp : in) {
+            int bucket = (mp.morton >> lowBit) & bitMask;
+            out[outIndex[bucket]++] = mp;
+        }
+        //break;
     }
+    if (nPasses & 1) std::swap(mObj, tempVector);
 }

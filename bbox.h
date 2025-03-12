@@ -41,17 +41,17 @@ class BBox{
 		myvec3 centleft;
 		myvec3 centright;
 
-		//Splits this current box into 2 nodes
-		virtual void split(){
-			return;
-		}
-
 		BBox() = default;
 
 		BBox(int max_amt){
 			BBox();
 			max_obj_amt = max_amt;
 		};
+
+		//Splits this current box into 2 nodes
+		virtual void split(){
+			return;
+		}
 		
 		virtual bool traverse(float& closest, myvec3* raydir, myvec3& normal, myvec3*& point_int, myvec3* position, int& obj, int& traverseCount){
 			return false;
@@ -145,11 +145,19 @@ class MortonBBox: public BBox{
 		myvec3 bottomleft;
 		myvec3 topright;
 
-		bool traverse(float& closest, myvec3* raydir, myvec3& normal, myvec3*& point_int, myvec3* position, int& obj, int& traverseCount);
-		bool traverseRecursive(float& closest, myvec3* raydir, myvec3& normal, myvec3*& point_int, myvec3* position, myvec3 inv_dir, int& obj, float& t_far, int& traverseCount);
+		bool traverse(float& closest, myvec3* raydir, myvec3& normal, myvec3*& point_int, myvec3* position, int& obj, int& traverseCount){
+			return false;
+		}
+		bool traverseRecursive(float& closest, myvec3* raydir, myvec3& normal, myvec3*& point_int, myvec3* position, myvec3 inv_dir, int& obj, float& t_far, int& traverseCount){
+			return false;
+		}
 
-		bool blockingTraverseRecursive(float closest, myvec3 raydir, myvec3 position, myvec3 inv_dir);
-		bool blockingTraverse(float closest, myvec3 raydir, myvec3 position);
+		bool blockingTraverseRecursive(float closest, myvec3 raydir, myvec3 position, myvec3 inv_dir){
+			return false;
+		}
+		bool blockingTraverse(float closest, myvec3 raydir, myvec3 position){
+			return false;
+		}
 
 		MortonBBox(){
 			bottomleft = myvec3(FLT_MAX, FLT_MAX, FLT_MAX);
@@ -182,11 +190,18 @@ class MortonBBox: public BBox{
 		//This was badly thought out. Anyways. Construct is split now.
 		void split();
 
-		void centroidBounding(std::span<Triangle> triangles);
+		void centroidBounding(std::span<Triangle> triangles){
+			return;
+		}
 
-		void bounding(std::span<Triangle> tri_span);
+		void bounding(std::span<Triangle> tri_span){
+			return;
+		}
 
-		CBB compactor();
+		CBB compactor(){
+			CBB cbb;
+			return cbb;
+		}
 };
 
 bool bboxTraverser(float& closest, myvec3* raydir, myvec3& normal, myvec3*& point_int, myvec3* position, int& obj, int& traverseCount, int offset);

@@ -31,6 +31,8 @@ void saveScreenshot(string fname) {
 
   BoundingBox= new SimpleBBox(std::max((int) TriangleList.size()/100, 5));
 
+  BBox* mortonBox = new MortonBBox();
+  mortonBox->split();
   //BBox construct
   for (Triangle tri: TriangleList){
     BoundingBox->unionBounds(tri);
