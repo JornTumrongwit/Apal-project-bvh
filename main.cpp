@@ -16,6 +16,7 @@
 #define MAINPROGRAM 
 #include "./variables.h" 
 #include "./readfile.h" // prototypes for readfile.cpp  
+#include "libmorton/morton.h"
 
 using namespace std ;
 
@@ -28,7 +29,7 @@ void saveScreenshot(string fname) {
 
   pix.resize(w*h);
 
-  BoundingBox= new SimpleBBox(5);
+  BoundingBox= new SimpleBBox(std::max((int) TriangleList.size()/100, 5));
 
   //BBox construct
   for (Triangle tri: TriangleList){
@@ -91,4 +92,41 @@ int main(int argc, char* argv[]) {
   std::cout<<"File read\n";
   saveScreenshot("../output/out.ppm");
   return 0;
+  // myvec3 min = myvec3(FLT_MAX, FLT_MAX, FLT_MAX);
+  // myvec3 max = myvec3(FLT_MIN, FLT_MIN, FLT_MIN);
+  // for(Triangle tri: TriangleList){
+  //   tri.Bound();
+  //   myvec3 centroid = tri.centroid();
+  //   min.x = std::min(min.x, centroid.x);
+  //   min.y = std::min(min.y, centroid.y);
+  //   min.z = std::min(min.z, centroid.z);
+
+  //   max.x = std::max(max.x, centroid.x);
+  //   max.y = std::max(max.y, centroid.y);
+  //   max.z = std::max(max.z, centroid.z);
+  // }
+
+  // int maxval = 2047;
+
+  // for(Triangle tri: TriangleList){
+  //   myvec3 centroid = tri.centroid();
+  //   printvec3(centroid);
+  //   std::cout<<"\n";
+  //   myvec3 normalized = myvec3((((centroid.x - min.x) / (max.x-min.x))* maxval), 
+  //                               (((centroid.y - min.y) / (max.y-min.y))* maxval),
+  //                               (((centroid.z - min.z) / (max.z-min.z))* maxval));
+  //   std::cout<<(int) normalized.x<<" "<<(int) normalized.y<<" "<<(int) normalized.z<<"\n";
+  //   int m3d = libmorton::morton3D_32_encode((int) normalized.x, (int) normalized.y, (int) normalized.z);
+  //   //int m3d = libmorton::morton3D_32_encode(1, 2, 3);
+  //   std::cout << m3d << "\n";
+  //   uint_fast16_t x;
+  //   uint_fast16_t y;
+  //   uint_fast16_t z;
+  //   libmorton::morton3D_32_decode(m3d, x, y, z);
+  //   myvec3 final_vec = myvec3(((float(x) / maxval) * (max.x-min.x) + min.x), 
+  //                             ((float(y) / maxval) * (max.y-min.y) + min.y),
+  //                             ((float(z) / maxval) * (max.z-min.z) + min.z));
+  //   printvec3(final_vec);
+  //   std::cout<<"\n"<<x<<" "<<y<<" "<<z<<"\n";
+  // }
 }
