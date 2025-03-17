@@ -16,6 +16,12 @@ struct myvec3 {
 		if (ItemKey == 2) return this->z;
 		else throw std::out_of_range("Accessing myvec3 with value > 2 or < 0");
 	}
+	float operator[](const int ItemKey) const {
+		if (ItemKey == 0) return this->x;
+		if (ItemKey == 1) return this->y;
+		if (ItemKey == 2) return this->z;
+		else throw std::out_of_range("Accessing myvec3 with value > 2 or < 0");
+	}
 	myvec3 copy();
 };
 

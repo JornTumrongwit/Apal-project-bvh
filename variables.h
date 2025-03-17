@@ -70,3 +70,5 @@ EXTERN std::vector<myvec4> vertices;
 EXTERN BBox* BoundingBox;
 
 EXTERN std::vector<CBB> compactBBoxes;
+
+EXTERN int maxPrims;

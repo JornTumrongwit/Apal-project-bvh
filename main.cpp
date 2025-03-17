@@ -21,6 +21,7 @@
 using namespace std ;
 
 void saveScreenshot(string fname) {
+  maxPrims = 1000;
   ofstream PicFile(fname);
   PicFile<<"P3\n"<<w<<' '<<h<<'\n'<<255<<'\n';
   const int width = w;
@@ -29,15 +30,16 @@ void saveScreenshot(string fname) {
 
   pix.resize(w*h);
 
-  BoundingBox= new SimpleBBox(std::max((int) TriangleList.size()/100, 5));
-
-  BBox* mortonBox = new MortonBBox();
-  mortonBox->split();
-  //BBox construct
-  for (Triangle tri: TriangleList){
-    BoundingBox->unionBounds(tri);
-  }
-  BoundingBox->split();
+  // BoundingBox = new SimpleBBox(std::max((int) TriangleList.size()/100, 5));
+  // //BBox construct
+  // for (Triangle tri: TriangleList){
+  //   BoundingBox->unionBounds(tri);
+  // }
+  // BoundingBox->split();
+  // BoundingBox->compact();
+  
+  BoundingBox = new MortonBBox();
+  BoundingBox->compact();
 
   //construct object vector
   for(int i = 0; i<TriangleList.size(); i++){
@@ -54,8 +56,6 @@ void saveScreenshot(string fname) {
   //   printvec3(tri.centroid());
   //   std::cout<<"\n";
   // }
-
-  BoundingBox->compact();
 
   std::cout<<"Setup complete, running renders\n";
   #pragma omp parallel for

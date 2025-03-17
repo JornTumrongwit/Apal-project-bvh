@@ -161,9 +161,9 @@ void get_color(myvec3 raydir, myvec3 mypos, myvec3 intersect, myvec3 eyedirn, my
 
 //if return false, then there is something blocking it
 bool blockCheck(float closest, myvec3 raydir, myvec3 position){
-	// for (Object* testObj : ObjectList){
-	// 	if(!testObj->blockCheck(closest, raydir, position)) return false;
-	// }
+	for (Object* testObj : ObjectList){
+		if(!testObj->blockCheck(closest, raydir, position)) return false;
+	}
 	// for (Sphere testSphere : SphereList) {
 	// 	if(!testSphere.blockCheck(closest, raydir, position)) return false;
 	// }
@@ -172,8 +172,8 @@ bool blockCheck(float closest, myvec3 raydir, myvec3 position){
 	// 	if (!testTriangle.blockCheck(closest, raydir, position)) return false;
 	// }
 	//return BoundingBox->blockingTraverse(closest, raydir, position);
-	return cbbBlock(closest, raydir, position, 0);
-	//return true;
+	//return cbbBlock(closest, raydir, position, 0);
+	return true;
 }
 
 myvec3 toVec3(float* inp) {
