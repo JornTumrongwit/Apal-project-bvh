@@ -10,6 +10,8 @@
 #include <fstream>
 #include <sstream>
 
+#include <chrono>
+#include <ctime>
 const float epsilon = 0.001;
 
 myvec3 raytracer(myvec3 raydir, myvec3 position, float depth)
@@ -29,14 +31,76 @@ myvec3 raytracer(myvec3 raydir, myvec3 position, float depth)
 
 	int tri_index = -1;
 	int traverseCount = 0;
-	if(bboxTraverser(closest, &raydir, tempnormal, inter, &position, tri_index, traverseCount, 0)){
-		//std::cout<<"complete ";
-		intersect = TRIANGLE;
-		hitObj = &TriangleList[tri_index];
-		//std::cout<<tri_index<<", "<<closest<< ", " << hitObj->diffuse[0] <<"\n";
-		//int size = TriangleList.size();
-		//return myvec3(((float) traverseCount)/size * 10, ((float) traverseCount)/size* 10, ((float) traverseCount)/size* 10);
+	// if(bboxTraverser(closest, &raydir, tempnormal, inter, &position, tri_index, traverseCount, 0)){
+	// 	//std::cout<<"complete ";
+	// 	intersect = TRIANGLE;
+	// 	hitObj = &TriangleList[tri_index];
+	// 	//std::cout<<tri_index<<", "<<closest<< ", " << hitObj->diffuse[0] <<"\n";
+	// }
+	bboxTraverser(closest, &raydir, tempnormal, inter, &position, tri_index, traverseCount, 0);
+	int size = TriangleList.size();
+	return myvec3(((float) traverseCount), ((float) traverseCount), ((float) traverseCount));
+	// for (Object* testObj : ObjectList) {
+	// 	if(testObj->CheckIntersect(closest, &raydir, tempnormal, inter, &position)){
+	// 		intersect = testObj -> poly_type;
+	// 		hitObj = testObj;
+	// 	}
+	// }
+	// for (Sphere testSphere : SphereList) {
+	// 	if(testSphere.CheckIntersect(closest, &raydir, tempnormal, inter, &position)){
+	// 		intersect = SPHERE;
+	// 		hitObj = &testSphere;
+	// 	}
+	// }
+	// for (Triangle testTriangle : TriangleList) {
+	// 	if(testTriangle.CheckIntersect(closest, &raydir, tempnormal, inter, &position)){
+	// 		intersect = TRIANGLE;
+	// 		hitObj = &testTriangle;
+	// 	}
+	// }
+	if (intersect == TRIANGLE) {
+		//for checking intersections only
+		//return myvec3(1, 1, 1);
+		get_color_tri(raydir, point_int, static_cast<Triangle*>(hitObj), position, tempnormal, pixels, depth);
 	}
+	else if (intersect == SPHERE) {
+		get_color_sph(raydir, point_int, static_cast<Sphere*>(hitObj), position, tempnormal, pixels, depth);
+	}
+	return pixels;
+}
+
+myvec3 raytrace_timed(myvec3 raydir, myvec3 position, float depth, std::ofstream& statsfile)
+{
+	if(depth > reflectdepth){
+		return myvec3(0, 0, 0);
+	}
+	Sphere hitsph;
+	Triangle hittri;
+	Object* hitObj;
+	myvec3 tempnormal = myvec3(0, 0, 0);
+	myvec3 point_int = myvec3(0, 0, 0);
+	myvec3* inter = &point_int;
+	myvec3 pixels = myvec3(0, 0, 0);
+	float closest = std::numeric_limits<float>::max();
+	SHAPE intersect = NONE;
+
+	int tri_index = -1;
+	int traverseCount = 0;
+	// if(bboxTraverser(closest, &raydir, tempnormal, inter, &position, tri_index, traverseCount, 0)){
+	// 	//std::cout<<"complete ";
+	// 	intersect = TRIANGLE;
+	// 	hitObj = &TriangleList[tri_index];
+	// 	//std::cout<<tri_index<<", "<<closest<< ", " << hitObj->diffuse[0] <<"\n";
+	// }
+	auto timer_start = std::chrono::high_resolution_clock::now();
+	bboxTraverser(closest, &raydir, tempnormal, inter, &position, tri_index, traverseCount, 0);
+	auto timer_end = std::chrono::high_resolution_clock::now();
+
+	long t = std::chrono::duration_cast<std::chrono::nanoseconds>(timer_end - timer_start).count();
+	statsfile<<t<<"\n";
+
+	int size = TriangleList.size();
+	return myvec3(((float) traverseCount), ((float) traverseCount), ((float) traverseCount));
 	// for (Object* testObj : ObjectList) {
 	// 	if(testObj->CheckIntersect(closest, &raydir, tempnormal, inter, &position)){
 	// 		intersect = testObj -> poly_type;

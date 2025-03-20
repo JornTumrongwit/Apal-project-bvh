@@ -20,9 +20,10 @@
 
 using namespace std ;
 
-void saveScreenshot(string fname) {
+void saveScreenshot(string fname, string timename) {
   maxPrims = 1000;
   ofstream PicFile(fname);
+  ofstream TimeFile(timename);
   PicFile<<"P3\n"<<w<<' '<<h<<'\n'<<255<<'\n';
   const int width = w;
   const int height = h;
@@ -64,7 +65,7 @@ void saveScreenshot(string fname) {
           float alpha = tanx * (i + 0.5 - (w / 2)) / (w / 2);
           float beta = tany * (j + 0.5 - (h / 2)) / (h / 2);
           myvec3 raydir = normalize(alpha * ucam + beta * vcam - wcam);
-          myvec3 fragColor = raytracer(raydir, eyeinit, 1);
+          myvec3 fragColor = raytrace_timed(raydir, eyeinit, 1, TimeFile);
           //std::cout << "(" << i << ", " << j << ")\n";
           pix[i + w*j].x = fragColor.x;
           pix[i + w*j].y = fragColor.y;
@@ -72,27 +73,39 @@ void saveScreenshot(string fname) {
       }
   }
 
+  //Comment this out if normalization is not needed
+  //prolly gonna just need this for grayscaled stuffs
+  float max_val = 1.0;
+  for (int j = h-1; j >=0; j--) {
+    for (int i = 0; i < w; i++) {
+      max_val = std::max(pix[i + w*j].x, max_val);
+    }
+  }
+
+  std::cout<<"Max value: "<<max_val<<"\n";
+
   for (int j = h-1; j >=0; j--) {
       for (int i = 0; i < w; i++) {
-        int red = static_cast<int>(pix[i + w*j].x * 255.999);
-        int green = static_cast<int>(pix[i + w*j].y * 255.999);
-        int blue = static_cast<int>(pix[i + w*j].z * 255.999);
+        int red = static_cast<int>((pix[i + w*j].x/max_val) * 255.999);
+        int green = static_cast<int>((pix[i + w*j].y/max_val) * 255.999);
+        int blue = static_cast<int>((pix[i + w*j].z/max_val) * 255.999);
         PicFile << red << ' ' << green << ' ' << blue << '\n';
       }
   }
   PicFile.close();
+  TimeFile.close();
 }
 
 int main(int argc, char* argv[]) {
 
-  if (argc < 2) {
-    cerr << "Needs scene argument\n"; 
+  if (argc < 4) {
+    cerr << "Needs scene argument and filename for output and timer\n"; 
     exit(-1); 
   }
   readfile(argv[1]);
 
   std::cout<<"File read\n";
-  saveScreenshot("../output/out.ppm");
+  saveScreenshot(argv[2], argv[3]);
   return 0;
   // myvec3 min = myvec3(FLT_MAX, FLT_MAX, FLT_MAX);
   // myvec3 max = myvec3(FLT_MIN, FLT_MIN, FLT_MIN);

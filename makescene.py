@@ -1,6 +1,6 @@
 import random
 
-triamt = 1000
+triamt = 5000
 
 header = '''size 640 480
 camera 0 0 1 0 0 -1 0 1 0 45

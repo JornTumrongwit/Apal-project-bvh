@@ -119,6 +119,7 @@ CBB SimpleBBox::compactor(){
 }
 
 bool bboxTraverseRecursive(float& closest, myvec3* raydir, myvec3& normal, myvec3*& point_int, myvec3* position, myvec3 inv_dir, int& obj, float& t_far, int& traverseCount, int offset){
+    // traverseCount++;
     //First, check if the ray intersects this box
     //slab method
     CBB box = compactBBoxes[offset];
@@ -145,8 +146,8 @@ bool bboxTraverseRecursive(float& closest, myvec3* raydir, myvec3& normal, myvec
     //if this is a leaf, check the prims
     if(box.amt > 0){
         //std::cout<<"Checking leaf\n";
-        traverseCount++;
         for(int i = box.offset; i < box.offset+box.amt; i++){
+            traverseCount++;
             Triangle tri = TriangleList[i];
             //std::cout<<"Check triangle " << i << " out of " << TriangleList.size()<< "\n";
             if(tri.CheckIntersect(closest, raydir, normal, point_int, position)){
@@ -374,26 +375,54 @@ void SimpleBBox::splitRecursion(std::span<Triangle> tri_span, int offset){
     }
 
     //std::cout<<"Splitting "<<offset<<" of size " << tri_span.size() << " with mid " << mid << "\n";
+    if(tri_span.size() > 128 * 1024){
+        #pragma omp parallel for
+        for(int i = 0; i<2; i++){
+            if(i==0){
+                child[0] = new SimpleBBox(this->max_obj_amt);
+                for(int ax = 0; ax < 3; ax++){
+                    child[0]->b.bottomleft[ax] = this->b.bottomleft[ax];
+                }
+                for(int ax = 0; ax < 3; ax++){
+                    child[0]->b.topright[ax] = this->b.topright[ax];
+                }
+                child[0]->b.topright[i] = midpoint;
+                child[0]->splitRecursion(tri_span.subspan(0, mid), offset);
+            }
+            else{  
+                child[1] = new SimpleBBox(this->max_obj_amt);
+                for(int ax = 0; ax < 3; ax++){
+                    child[1]->b.bottomleft[ax] = this->b.bottomleft[ax];
+                }
+                for(int ax = 0; ax < 3; ax++){
+                    child[1]->b.topright[ax] = this->b.topright[ax];
+                }
+                child[1]->b.bottomleft[i] = midpoint;
+                child[1]->splitRecursion(tri_span.subspan(mid), offset+mid);
+            }
+        }
+    }
+    else{
+        child[0] = new SimpleBBox(this->max_obj_amt);
+        for(int ax = 0; ax < 3; ax++){
+            child[0]->b.bottomleft[ax] = this->b.bottomleft[ax];
+        }
+        for(int ax = 0; ax < 3; ax++){
+            child[0]->b.topright[ax] = this->b.topright[ax];
+        }
+        child[0]->b.topright[i] = midpoint;
+        child[0]->splitRecursion(tri_span.subspan(0, mid), offset);
 
-    child[0] = new SimpleBBox(this->max_obj_amt);
-    for(int ax = 0; ax < 3; ax++){
-        child[0]->b.bottomleft[ax] = this->b.bottomleft[ax];
+        child[1] = new SimpleBBox(this->max_obj_amt);
+        for(int ax = 0; ax < 3; ax++){
+            child[1]->b.bottomleft[ax] = this->b.bottomleft[ax];
+        }
+        for(int ax = 0; ax < 3; ax++){
+            child[1]->b.topright[ax] = this->b.topright[ax];
+        }
+        child[1]->b.bottomleft[i] = midpoint;
+        child[1]->splitRecursion(tri_span.subspan(mid), offset+mid);
     }
-    for(int ax = 0; ax < 3; ax++){
-        child[0]->b.topright[ax] = this->b.topright[ax];
-    }
-    child[0]->b.topright[i] = midpoint;
-    child[0]->splitRecursion(tri_span.subspan(0, mid), offset);
-
-    child[1] = new SimpleBBox(this->max_obj_amt);
-    for(int ax = 0; ax < 3; ax++){
-        child[1]->b.bottomleft[ax] = this->b.bottomleft[ax];
-    }
-    for(int ax = 0; ax < 3; ax++){
-        child[1]->b.topright[ax] = this->b.topright[ax];
-    }
-    child[1]->b.bottomleft[i] = midpoint;
-    child[1]->splitRecursion(tri_span.subspan(mid), offset+mid);
 
     //children are done, rebound
     this->bounding(tri_span);
