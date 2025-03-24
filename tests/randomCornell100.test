@@ -1,0 +1,2627 @@
+#Cornell Box
+size 640 480
+camera 0 0 1 0 0 -1 0 1 0 45
+output scene6.png
+
+maxdepth 5
+
+
+
+maxverts 12
+#planar face
+vertex -1 +1 0
+vertex -1 -1 0
+vertex +1 -1 0
+vertex +1 +1 0
+
+#cube
+vertex -1 +1 +1
+vertex +1 +1 +1
+vertex -1 -1 +1
+vertex +1 -1 +1
+
+vertex -1 +1 -1
+vertex +1 +1 -1
+vertex -1 -1 -1
+vertex +1 -1 -1
+
+
+ambient 0 0 0
+specular 0 0 0
+shininess 1
+emission 0 0 0
+diffuse 0 0 0
+
+attenuation 1 0.1 0.05
+
+point 0 0.44 -1.5 0.8 0.8 0.8
+point 0 0 1.5 0.8 0.8 0.8
+directional 0 1 -1 0.2 0.2 0.2
+
+diffuse 0 0 1
+#sphere 0 0.8 -1.5 0.1
+
+
+pushTransform
+
+#red
+pushTransform
+translate 0 0 -3
+rotate 0 1 0 60
+scale 10 10 1
+diffuse 1 0 0
+tri 0 1 2
+tri 0 2 3
+popTransform
+
+#green
+pushTransform
+translate 0 0 -3
+rotate 0 1 0 -60
+scale 10 10 1
+diffuse 0 1 0
+tri 0 1 2
+tri 0 2 3
+popTransform
+
+#back
+pushTransform
+scale 10 10 1
+translate 0 0 -2
+diffuse 1 1 1
+tri 0 1 2
+tri 0 2 3
+popTransform
+
+#top
+pushTransform
+translate 0 0.5 0
+rotate 1 0 0 60
+translate 0 0 -1
+scale 10 10 1
+diffuse 1 1 1
+tri 0 1 2
+tri 0 2 3
+popTransform
+
+#bottom
+pushTransform
+translate 0 -0.5 0
+rotate 1 0 0 -60
+translate 0 0 -1
+scale 10 10 1
+diffuse 1 1 1
+tri 0 1 2
+tri 0 2 3
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate -0.21658968048127847 -0.05476938112350849 -0.43492106950186527
+rotate 0 1 0 296
+scale 0.05863214040314942 0.08772331450982912 0.09746290622564761
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate -0.10935771104844827 -0.48905684324681564 -0.2509026038693547
+rotate 0 1 0 168
+scale 0.039247644336248846 0.042344672884009206 0.09193908146310088
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate -0.04532964601466505 -0.36015336148327964 -0.5238003589718792
+rotate 0 1 0 63
+scale 0.14929075148698093 0.10229610962573958 0.031489242976394244
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate 0.12468159101183951 -0.23725416206489092 -0.3020767382694147
+rotate 0 1 0 150
+scale 0.14430293514313283 0.12847924896765026 0.028974532688263645
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate -0.22136614395261422 -0.025385950476736807 -1.365686764370509
+rotate 0 1 0 92
+scale 0.02724131213098878 0.1651811853023482 0.15420836756359665
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate 0.10728843272869637 -0.11564212938138191 -0.5288926611354459
+rotate 0 1 0 331
+scale 0.19584576837308673 0.10783248780317359 0.14352780790452224
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate -0.06539297160764479 -0.49481714836431107 -1.0493230302691419
+rotate 0 1 0 352
+scale 0.16458139568135588 0.1756582716619716 0.18145754924008978
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate -0.33436909998761044 -0.049902626837068864 -0.9469731527938263
+rotate 0 1 0 147
+scale 0.03714777279455833 0.11363108946584842 0.053094910341251245
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate -0.36917655064367383 -0.33721911866693166 -0.9391235186501627
+rotate 0 1 0 167
+scale 0.0735012296490496 0.09500064525935567 0.16771861679462582
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate 0.08526692265141056 -0.33044142117225384 -1.6333752161063504
+rotate 0 1 0 134
+scale 0.015529654551488801 0.18956559319379185 0.07004764829381223
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate -0.3059833297236164 -0.04882056487157055 -1.8560482590400416
+rotate 0 1 0 227
+scale 0.12867487800119254 0.07863650979551946 0.04909031177870801
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate 0.2206442479877243 -0.30781771710365263 -0.4804743480334792
+rotate 0 1 0 262
+scale 0.03896341764456539 0.12114391180640083 0.15344850305869517
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate 0.3684360437426144 -0.21223445010164443 -0.7630666544026983
+rotate 0 1 0 153
+scale 0.05128488847341898 0.15480437785671047 0.1212066307097614
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate 0.05754379130001197 -0.21805990303262546 -1.4796945142011384
+rotate 0 1 0 84
+scale 0.05361188840665971 0.12203222791957687 0.18828795367462625
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate 0.09925421037730808 -0.11276050259403719 -0.28992520710839664
+rotate 0 1 0 257
+scale 0.13572961964847466 0.0966444495215765 0.0688822774292047
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate -0.23571947524575176 -0.10001417300046866 -1.135687829010167
+rotate 0 1 0 6
+scale 0.15289927288357189 0.15957455852219646 0.09715774787180947
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate 0.4340550991692125 -0.2671690516531842 -0.9721906638156472
+rotate 0 1 0 145
+scale 0.1871411863463353 0.10721002728988388 0.17491333311182877
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate 0.40981617960715977 -0.4399926234067845 -1.9048313528195449
+rotate 0 1 0 343
+scale 0.08793617390144393 0.046579587741914834 0.14719522017308898
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate 0.01568706291039934 -0.15603073361709158 -1.7362983373920862
+rotate 0 1 0 248
+scale 0.09834304630138248 0.1807782872431038 0.1569460205277094
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate 0.07564347992440623 -0.23826150061966717 -1.9058455674319514
+rotate 0 1 0 179
+scale 0.031584059750192704 0.03517103353752693 0.03486321550829738
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate -0.4466634182143814 -0.2231913545898957 -1.0159034657112511
+rotate 0 1 0 316
+scale 0.10068224174896684 0.06408777819532271 0.08556009939796375
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate -0.20352028596472904 -0.4739435787314025 -0.13163725606485865
+rotate 0 1 0 54
+scale 0.16218477180498586 0.17350065108875337 0.1876313654167449
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate -0.26841031189800035 -0.14471452480593788 -0.47633896081715066
+rotate 0 1 0 173
+scale 0.14551485355697766 0.06463476293894818 0.1126299644087338
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate 0.49598561961007515 -0.24394643548568878 -0.7619868399173806
+rotate 0 1 0 315
+scale 0.09963935286182427 0.18463956969722004 0.14409290413957884
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate 0.37544728891867085 -0.24552013434843145 -0.5585349471199379
+rotate 0 1 0 182
+scale 0.19010048772742838 0.10463863804073005 0.16080510481074248
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate 0.11691984814855183 -0.34420449993990443 -0.9824423006275702
+rotate 0 1 0 325
+scale 0.1545923413995967 0.11173966438873885 0.1732242833427817
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate 0.2233154585600109 -0.3716453416292109 -0.4389541236215071
+rotate 0 1 0 334
+scale 0.1853658310141356 0.11608872042801562 0.07460487576878413
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate -0.04870401550503212 -0.2808314240853125 -0.8499687369331228
+rotate 0 1 0 143
+scale 0.10105418250059554 0.16064393507814825 0.01898596524502601
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate -0.3562412059402712 -0.22210648009322237 -0.3037715408680701
+rotate 0 1 0 293
+scale 0.05138369907644261 0.18007616795100212 0.06925665698668827
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate -0.28376954530554943 -0.1406328709080854 -1.4678023140363525
+rotate 0 1 0 41
+scale 0.038645395907611804 0.01751635753042801 0.06314330189183229
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate -0.0007703014669602215 -0.47108174853058105 -1.3987845091842803
+rotate 0 1 0 196
+scale 0.10861522921376114 0.019509938770472437 0.09585884160293583
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate 0.43184066760987194 -0.1162313242312541 -1.1620087777202146
+rotate 0 1 0 294
+scale 0.052467309904555 0.05513404169412315 0.09445345617591462
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate 0.30842820789851144 -0.11985608252219299 -0.2593214249023845
+rotate 0 1 0 14
+scale 0.09885857597969751 0.063589669734211 0.09962724413166019
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate -0.2320049425206947 -0.30177539877606685 -1.430279658394005
+rotate 0 1 0 248
+scale 0.05861815177031632 0.051937588354318394 0.12089337721203029
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate -0.43955745609068575 -0.0401631305283468 -0.31845550249095833
+rotate 0 1 0 12
+scale 0.10576713200366637 0.014065949496322474 0.08482308399754795
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate -0.31028069376425316 -0.16918354979396893 -1.10633747446512
+rotate 0 1 0 276
+scale 0.0795700474156529 0.08128730700871423 0.18292607517798495
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate -0.1753955739862566 -0.13841760863308028 -1.845602043850994
+rotate 0 1 0 303
+scale 0.03777998188145474 0.025400745130402302 0.14977539622647026
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate -0.1557580959175373 -0.08521505935143986 -0.9887979815045296
+rotate 0 1 0 321
+scale 0.1309319449859134 0.16638120824034264 0.06772140170612234
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate -0.3430166600464233 -0.4053788758130656 -0.04299956792483184
+rotate 0 1 0 241
+scale 0.13556075711699003 0.15448615108606437 0.04798468613464401
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate -0.023597978660769847 -0.10432668622426527 -0.0019240883771496353
+rotate 0 1 0 280
+scale 0.06856768728670132 0.0805984121288592 0.17001314090566746
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate -0.4899154723724436 -0.2960802498773119 -0.01802322465659767
+rotate 0 1 0 141
+scale 0.16821285778648487 0.19786550977703643 0.08484946256572255
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate -0.28573341241874395 -0.22096480749187952 -0.8573241270501637
+rotate 0 1 0 233
+scale 0.13573748018929774 0.09933121017975462 0.0359108336651625
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate 0.13728653439559424 -0.1234627108525237 -0.40647169783709347
+rotate 0 1 0 175
+scale 0.15156789699446013 0.040615257859586064 0.0753723324558719
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate 0.22893557462450775 -0.10356757290381674 -0.9501960556313607
+rotate 0 1 0 234
+scale 0.07926959476123357 0.05540182094056202 0.03856932869768568
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate -0.31091498331970924 -0.41202857232292284 -0.25877963693561123
+rotate 0 1 0 231
+scale 0.15975114818625455 0.15784305337992766 0.07632280687831507
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate 0.19240388019820842 -0.24591642375345357 -0.11619391860233441
+rotate 0 1 0 322
+scale 0.03956389839888908 0.06638149806968106 0.09955509488118558
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate 0.0838944526646126 -0.17948331558976044 -0.8108434011477277
+rotate 0 1 0 111
+scale 0.128263654344618 0.08613867415268484 0.03917202304351447
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate 0.45292588137143286 -0.09771633728828966 -0.8997353134981845
+rotate 0 1 0 207
+scale 0.06392541582517657 0.04650768595531233 0.0236512210121192
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate 0.3982495144149373 -0.15357312174657217 -1.9054964137976784
+rotate 0 1 0 160
+scale 0.17995206861508267 0.18827743533270722 0.0307644195489968
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate -0.08536381400616522 -0.3382743255897162 -0.021339183916658788
+rotate 0 1 0 199
+scale 0.1195589753932197 0.09104102493697297 0.1294920430005839
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate 0.2089287037433184 -0.43902173103778297 -1.1172142088430357
+rotate 0 1 0 180
+scale 0.03617541731298217 0.08977351370056186 0.017723212601992673
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate -0.21594948447327844 -0.44414399242877434 -0.01253181087167965
+rotate 0 1 0 161
+scale 0.11460887317260651 0.17445604664319955 0.07277591964390757
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate 0.3578910106726666 -0.3176329180072352 -1.4709917643813042
+rotate 0 1 0 218
+scale 0.07284613166662565 0.18316215082581785 0.08897666904707073
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate 0.3537357558204218 -0.05473526936092782 -1.2866543828418944
+rotate 0 1 0 309
+scale 0.012797092546777853 0.16196012822377104 0.04695644513754616
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate -0.04012699808002074 -0.009307357198585997 -0.32047317690979393
+rotate 0 1 0 199
+scale 0.17443452550480354 0.09661420057226054 0.05939575166865055
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate -0.27111394817881274 -0.3947201346106625 -1.3382235664503952
+rotate 0 1 0 281
+scale 0.06398597761750975 0.1901692494443609 0.14325747833236255
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate 0.021307709301310873 -0.20008682810628342 -0.8126759359357163
+rotate 0 1 0 111
+scale 0.04381685876000662 0.18931255712723905 0.16296647619442595
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate 0.3032623278506861 -0.2614115846854135 -1.8116525596368216
+rotate 0 1 0 89
+scale 0.04307698824568629 0.07791079570426213 0.0514365728140666
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate -0.31093167374474195 -0.326339479859287 -1.5045773253495685
+rotate 0 1 0 28
+scale 0.015997153832886506 0.16430790306651935 0.14244802348259633
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate -0.014718845102245304 -0.3782032586071392 -1.0417395619361756
+rotate 0 1 0 33
+scale 0.09576209354006955 0.15010743431255535 0.18756335886764045
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate -0.19442671758922592 -0.36539533676413377 -1.119913893479991
+rotate 0 1 0 207
+scale 0.19992836545977768 0.08194548744806926 0.1715199719098598
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate 0.42547154240131213 -0.00010552914827371973 -1.0069922337908908
+rotate 0 1 0 337
+scale 0.07421726479968394 0.18768509724397525 0.10325882795532189
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate -0.2029488481472871 -0.4640259242431079 -0.7777137826179439
+rotate 0 1 0 66
+scale 0.12082071058145487 0.09761208458763855 0.035360970039076504
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate -0.10213402405505223 -0.337319816100897 -1.7573573687620705
+rotate 0 1 0 245
+scale 0.04146865260684888 0.1532622123443297 0.1647095987910111
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate -0.17565073277276022 -0.0458128711787264 -1.2992200629760149
+rotate 0 1 0 236
+scale 0.11370685475042888 0.08585187431303341 0.14629477345298372
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate -0.14459738665054622 -0.49445292855477746 -0.4474660683778362
+rotate 0 1 0 245
+scale 0.0638229859689096 0.11498844083154265 0.1363729829157403
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate 0.33779997307567144 -0.31554494451384774 -1.7938411411649073
+rotate 0 1 0 182
+scale 0.08881444457737817 0.0877935920603574 0.10103026624979779
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate -0.3106097765560397 -0.10230478696612477 -0.13505279675047954
+rotate 0 1 0 125
+scale 0.1744041617434978 0.03077743577925815 0.012489996993788792
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate -0.02033038065682602 -0.044816344938953534 -0.09686011198356725
+rotate 0 1 0 62
+scale 0.11484710249717271 0.12351540181844492 0.02644809697293933
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate -0.13210518146860728 -0.26422795871184357 -1.5516964547686152
+rotate 0 1 0 19
+scale 0.056618353986641654 0.17228294782919212 0.17324298158802756
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate -0.014672631633161681 -0.47682333999077187 -1.8132258278273103
+rotate 0 1 0 314
+scale 0.07396209983028723 0.17507472630416696 0.035490002244821316
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate -0.3851989740617707 -0.3953448462221085 -0.8729737421345709
+rotate 0 1 0 3
+scale 0.10522365905508732 0.09088554232183248 0.18739272722939584
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate -0.013713194767130843 -0.10674489147462196 -0.2654081976594862
+rotate 0 1 0 12
+scale 0.13609463364137764 0.08847934303033923 0.05548324672058104
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate 0.4625461189179423 -0.06203759847111057 -1.337410101596192
+rotate 0 1 0 64
+scale 0.03576833948902801 0.172837536037459 0.15541454174336952
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate 0.38835990800957565 -0.22378277310975497 -1.9309267707216793
+rotate 0 1 0 286
+scale 0.16854684853515436 0.1544867073520136 0.03429882603117068
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate 0.0009411473343727828 -0.17297700333898308 -1.0611840674764654
+rotate 0 1 0 86
+scale 0.12877029313771146 0.14196895273250082 0.08879270861719286
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate -0.3343915219651521 -0.18768129790656013 -1.5519739103601005
+rotate 0 1 0 175
+scale 0.03244871043744358 0.09059025761195275 0.12765300083132536
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate 0.401209205662575 -0.32718829251570286 -1.285713021573743
+rotate 0 1 0 187
+scale 0.017351839333335513 0.16987574785789045 0.18637731028286977
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate -0.19090193170713798 -0.20637854016316437 -0.17470739340332053
+rotate 0 1 0 330
+scale 0.026361195749904746 0.19878937952419196 0.050749185780621625
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate 0.4112321820420751 -0.45133625859225884 -1.9429779658297852
+rotate 0 1 0 12
+scale 0.14222828216202213 0.15056432957600224 0.17125349757301195
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate 0.2488018065777876 -0.268172130244877 -1.6754248290258313
+rotate 0 1 0 123
+scale 0.19936388754870174 0.1788634912581608 0.16143342350834378
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate 0.31513297001822926 -0.33370561511007457 -0.5802911092067307
+rotate 0 1 0 210
+scale 0.09759002553229966 0.08347979456234306 0.0759731057531751
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate -0.23143020449722518 -0.18537853929323495 -1.4293690084921458
+rotate 0 1 0 82
+scale 0.0643508925679211 0.15683032987199175 0.10143156739111545
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate 0.2158283404503929 -0.30816782592756004 -1.2418521889310727
+rotate 0 1 0 112
+scale 0.13510589757061423 0.028777735273474186 0.024180180153719734
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate 0.4883366944749079 -0.036875247122901966 -1.808282413466705
+rotate 0 1 0 34
+scale 0.175060506284307 0.07144736797619242 0.048173465909303
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate -0.2918198406156969 -0.14497618841790116 -1.2888648898165205
+rotate 0 1 0 127
+scale 0.03189045152151441 0.08668364773574451 0.03183886029559557
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate 0.08099401735179834 -0.3068708428036136 -1.5060172359749286
+rotate 0 1 0 326
+scale 0.03081549728833137 0.08544019493515888 0.11531835150553019
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate -0.4518784987190242 -0.2712770738821538 -0.4589159257650677
+rotate 0 1 0 28
+scale 0.05340098576680756 0.04240792390364621 0.08165712230495717
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate -0.11244749748658656 -0.1877701225664377 -0.13558167672294474
+rotate 0 1 0 289
+scale 0.11358065655148562 0.09329655207498654 0.161502214995009
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate -0.09029799078100009 -0.45301679770191106 -0.3826494889409653
+rotate 0 1 0 50
+scale 0.07887968099928576 0.06916922952225817 0.17065524280151148
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate -0.06164041865274128 -0.23935496642285986 -0.07073129353291807
+rotate 0 1 0 232
+scale 0.12241261609535786 0.0837951402425856 0.1747953395833161
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate -0.2914681528678441 -0.47349322191698884 -0.04807678434239482
+rotate 0 1 0 221
+scale 0.03666385325650759 0.020278111980385552 0.11569117875587957
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate -0.06961355035082095 -0.1807863776992772 -1.2017461736623882
+rotate 0 1 0 231
+scale 0.023131640929703552 0.1391144582547472 0.1257992975744946
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate 0.13723922706009106 -0.22928433950167765 -0.1497396147004666
+rotate 0 1 0 173
+scale 0.07663731920256862 0.1301464393784339 0.023314349299601397
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate -0.019168913717036218 -0.043795864838315934 -1.911283131944696
+rotate 0 1 0 186
+scale 0.09422644677369067 0.037844060485157656 0.0628319623815418
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate 0.4107993671277528 -0.08891350356735833 -0.3121921397663394
+rotate 0 1 0 110
+scale 0.19421808108715777 0.018309442806011197 0.08089928029101501
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate 0.12239469264350322 -0.3904332329658795 -0.08268775852016352
+rotate 0 1 0 55
+scale 0.05042849467763896 0.08049729971758562 0.13991394357820733
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate 0.1795766403921376 -0.14332918417357365 -1.1498656964568885
+rotate 0 1 0 92
+scale 0.0893622216185274 0.054437658479610726 0.18238655096563863
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate 0.19575201453593072 -0.18010518258141112 -1.962201208733247
+rotate 0 1 0 237
+scale 0.1792840990128033 0.06266445219885029 0.07137653396421553
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate 0.15258545401022194 -0.0712151749916477 -1.5733684557300256
+rotate 0 1 0 217
+scale 0.10815685198569655 0.0918728969938487 0.08031269150930444
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate -0.05835652862313201 -0.16439277113205691 -1.8356312526780623
+rotate 0 1 0 149
+scale 0.11704987309959256 0.0272868876122567 0.0713373387368806
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate -0.24745624328166638 -0.17668390891065744 -0.788419344157254
+rotate 0 1 0 148
+scale 0.033399978986423336 0.157670311079423 0.1710578600118885
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate -0.32109548105828334 -0.22820708329726386 -1.8796313797730468
+rotate 0 1 0 329
+scale 0.04140270159668575 0.01367227246766483 0.11864850091289571
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate -0.1286816762681261 -0.12628234629996216 -1.6136592064344233
+rotate 0 1 0 176
+scale 0.012302876855773961 0.1267179985570775 0.06434748145631404
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate 0.17681520124030092 -0.24675296290094373 -1.1559380293795534
+rotate 0 1 0 136
+scale 0.13224815719814503 0.07184709292595508 0.07291971187456273
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate 0.24655337405223055 -0.1716603834386803 -1.901747879869285
+rotate 0 1 0 111
+scale 0.07499989027508018 0.052187163309455824 0.05340433070423675
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate -0.022502328085484802 -0.023437989227327538 -1.443992044722487
+rotate 0 1 0 161
+scale 0.07685570065918339 0.1729420833116797 0.10539182946988081
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate 0.24914904279992756 -0.06904068612377456 -0.10007313860277223
+rotate 0 1 0 35
+scale 0.08967610074347582 0.14005400206542956 0.16150285501503517
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate -0.09871432287316706 -0.49492653017044685 -0.523574956988685
+rotate 0 1 0 14
+scale 0.09625042509024982 0.011730470372714005 0.17949481759115937
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate 0.11085867900677615 -0.11236008366926209 -0.3588586525441366
+rotate 0 1 0 207
+scale 0.10530861285119877 0.18924762265190848 0.08223866124513775
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+

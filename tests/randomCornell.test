@@ -1,0 +1,327 @@
+#Cornell Box
+size 640 480
+camera 0 0 1 0 0 -1 0 1 0 45
+output scene6.png
+
+maxdepth 5
+
+
+
+maxverts 12
+#planar face
+vertex -1 +1 0
+vertex -1 -1 0
+vertex +1 -1 0
+vertex +1 +1 0
+
+#cube
+vertex -1 +1 +1
+vertex +1 +1 +1
+vertex -1 -1 +1
+vertex +1 -1 +1
+
+vertex -1 +1 -1
+vertex +1 +1 -1
+vertex -1 -1 -1
+vertex +1 -1 -1
+
+
+ambient 0 0 0
+specular 0 0 0
+shininess 1
+emission 0 0 0
+diffuse 0 0 0
+
+attenuation 1 0.1 0.05
+
+point 0 0.44 -1.5 0.8 0.8 0.8
+point 0 0 1.5 0.8 0.8 0.8
+directional 0 1 -1 0.2 0.2 0.2
+
+diffuse 0 0 1
+#sphere 0 0.8 -1.5 0.1
+
+
+pushTransform
+
+#red
+pushTransform
+translate 0 0 -3
+rotate 0 1 0 60
+scale 10 10 1
+diffuse 1 0 0
+tri 0 1 2
+tri 0 2 3
+popTransform
+
+#green
+pushTransform
+translate 0 0 -3
+rotate 0 1 0 -60
+scale 10 10 1
+diffuse 0 1 0
+tri 0 1 2
+tri 0 2 3
+popTransform
+
+#back
+pushTransform
+scale 10 10 1
+translate 0 0 -2
+diffuse 1 1 1
+tri 0 1 2
+tri 0 2 3
+popTransform
+
+#top
+pushTransform
+translate 0 0.5 0
+rotate 1 0 0 60
+translate 0 0 -1
+scale 10 10 1
+diffuse 1 1 1
+tri 0 1 2
+tri 0 2 3
+popTransform
+
+#bottom
+pushTransform
+translate 0 -0.5 0
+rotate 1 0 0 -60
+translate 0 0 -1
+scale 10 10 1
+diffuse 1 1 1
+tri 0 1 2
+tri 0 2 3
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate -0.2327297024272873 -0.4021911570689679 -0.7487119632225079
+rotate 0 1 0 151
+scale 0.17526315748476357 0.17618532094498313 0.12128908960184522
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate -0.1489499234219015 -0.4239101148964518 -0.4407205944119512
+rotate 0 1 0 172
+scale 0.1208522018327043 0.17446137742725124 0.02799595231779662
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate -0.40258868821839955 0.1831953332312113 -0.5553628711187915
+rotate 0 1 0 352
+scale 0.07440419921899616 0.011294190868447107 0.07623540271549939
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate -0.34152506018098594 0.2831586959103126 -1.913854854916884
+rotate 0 1 0 295
+scale 0.07172467188589322 0.03190102606304102 0.19568175951947275
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate 0.46428597942348393 0.1823710932807715 -1.1016581114949795
+rotate 0 1 0 276
+scale 0.0655440115935412 0.1385994793676177 0.10173778716569525
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate -0.35585484456700656 0.37941891191764465 -1.316505321831642
+rotate 0 1 0 238
+scale 0.015711227354770832 0.012118319769188647 0.05749766263844174
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate 0.27004255654446907 0.43400172409163107 -1.9461860220415912
+rotate 0 1 0 306
+scale 0.13017867813401685 0.036107746066513124 0.1869392203311451
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate 0.04373812544848543 -0.16093523164105417 -1.4669191538119588
+rotate 0 1 0 212
+scale 0.016189772827226504 0.12111509293604056 0.1808282263873309
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate -0.255894265582399 0.2592799754512025 -1.415964089370422
+rotate 0 1 0 112
+scale 0.1612880975866394 0.10110169788996458 0.043225938645657686
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
+
+diffuse 0.5 0.7 0.2
+specular 0.2 0.2 0.2
+pushTransform
+translate 0.3455506861152978 -0.3857265215265391 -1.1728283619804967
+rotate 0 1 0 351
+scale 0.16391485472805745 0.1903896633704886 0.026229981699337206
+diffuse 1 1 1
+
+tri 4 6 5
+tri 6 7 5
+tri 4 5 8
+tri 5 9 8
+tri 7 9 5
+tri 7 11 9
+tri 4 8 10
+tri 4 10 6
+tri 6 10 11
+tri 6 11 7
+tri 10 8 9
+tri 10 9 11
+popTransform
+
