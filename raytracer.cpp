@@ -31,15 +31,16 @@ myvec3 raytracer(myvec3 raydir, myvec3 position, float depth)
 
 	int tri_index = -1;
 	int traverseCount = 0;
-	// if(bboxTraverser(closest, &raydir, tempnormal, inter, &position, tri_index, traverseCount, 0)){
-	// 	//std::cout<<"complete ";
-	// 	intersect = TRIANGLE;
-	// 	hitObj = &TriangleList[tri_index];
-	// 	//std::cout<<tri_index<<", "<<closest<< ", " << hitObj->diffuse[0] <<"\n";
-	// }
-	bboxTraverser(closest, &raydir, tempnormal, inter, &position, tri_index, traverseCount, 0);
-	int size = TriangleList.size();
-	return myvec3(((float) traverseCount), ((float) traverseCount), ((float) traverseCount));
+	if(bboxTraverser(closest, &raydir, tempnormal, inter, &position, tri_index, traverseCount, 0)){
+		//std::cout<<"complete ";
+		intersect = TRIANGLE;
+		hitObj = &TriangleList[tri_index];
+		//std::cout<<tri_index<<", "<<closest<< ", " << hitObj->diffuse[0] <<"\n";
+	}
+	// bboxTraverser(closest, &raydir, tempnormal, inter, &position, tri_index, traverseCount, 0);
+	// int size = TriangleList.size();
+	// return myvec3(((float) traverseCount), ((float) traverseCount), ((float) traverseCount));
+	
 	// for (Object* testObj : ObjectList) {
 	// 	if(testObj->CheckIntersect(closest, &raydir, tempnormal, inter, &position)){
 	// 		intersect = testObj -> poly_type;
@@ -69,7 +70,7 @@ myvec3 raytracer(myvec3 raydir, myvec3 position, float depth)
 	return pixels;
 }
 
-myvec3 raytrace_timed(myvec3 raydir, myvec3 position, float depth, std::ofstream& statsfile)
+myvec3 raytrace_timed(myvec3 raydir, myvec3 position, float depth, std::ofstream& statsfile, int mode)
 {
 	if(depth > reflectdepth){
 		return myvec3(0, 0, 0);
@@ -92,21 +93,29 @@ myvec3 raytrace_timed(myvec3 raydir, myvec3 position, float depth, std::ofstream
 	// 	hitObj = &TriangleList[tri_index];
 	// 	//std::cout<<tri_index<<", "<<closest<< ", " << hitObj->diffuse[0] <<"\n";
 	// }
-	auto timer_start = std::chrono::high_resolution_clock::now();
-	bboxTraverser(closest, &raydir, tempnormal, inter, &position, tri_index, traverseCount, 0);
-	auto timer_end = std::chrono::high_resolution_clock::now();
+	if(mode != 0){
+		auto timer_start = std::chrono::high_resolution_clock::now();
+		bboxTraverser(closest, &raydir, tempnormal, inter, &position, tri_index, traverseCount, 0);
+		auto timer_end = std::chrono::high_resolution_clock::now();
 
-	long t = std::chrono::duration_cast<std::chrono::nanoseconds>(timer_end - timer_start).count();
-	statsfile<<t<<"\n";
+		long t = std::chrono::duration_cast<std::chrono::nanoseconds>(timer_end - timer_start).count();
+		statsfile<<t<<"\n";
 
-	int size = TriangleList.size();
-	return myvec3(((float) traverseCount), ((float) traverseCount), ((float) traverseCount));
-	// for (Object* testObj : ObjectList) {
-	// 	if(testObj->CheckIntersect(closest, &raydir, tempnormal, inter, &position)){
-	// 		intersect = testObj -> poly_type;
-	// 		hitObj = testObj;
-	// 	}
-	// }
+		int size = TriangleList.size();
+		return myvec3(((float) traverseCount), ((float) traverseCount), ((float) traverseCount));
+	}
+	else{
+		auto timer_start = std::chrono::high_resolution_clock::now();
+		for (Object* testObj : ObjectList) {
+			testObj->CheckIntersect(closest, &raydir, tempnormal, inter, &position);
+		}
+		auto timer_end = std::chrono::high_resolution_clock::now();
+		long t = std::chrono::duration_cast<std::chrono::nanoseconds>(timer_end - timer_start).count();
+		statsfile<<t<<"\n";
+		int size = TriangleList.size();
+		traverseCount = 255;
+		return myvec3(((float) traverseCount), ((float) traverseCount), ((float) traverseCount));
+	}
 	// for (Sphere testSphere : SphereList) {
 	// 	if(testSphere.CheckIntersect(closest, &raydir, tempnormal, inter, &position)){
 	// 		intersect = SPHERE;
