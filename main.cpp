@@ -8,6 +8,8 @@
 #include <sstream>
 #include <deque>
 #include <stack>
+#include <chrono>
+#include <ctime>
 #include "./Transform.h"
 #include "./raytracer.h"
 #include "./bbox.h"
@@ -20,9 +22,11 @@
 
 using namespace std ;
 
-void saveScreenshot(string fname, string timename) {
-  maxPrims = 1000;
-  ofstream PicFile(fname);
+void saveScreenshot(string fname, string timename, int mode) {
+  maxPrims = max(5, (int)TriangleList.size()/100);
+  std::cout<<"Primitive amt: "<<maxPrims<<"\n";
+  ofstream PicFile(fname+".ppm");
+  ofstream rawFile(fname+"_unnorm.txt");
   ofstream TimeFile(timename);
   PicFile<<"P3\n"<<w<<' '<<h<<'\n'<<255<<'\n';
   const int width = w;
@@ -31,16 +35,26 @@ void saveScreenshot(string fname, string timename) {
 
   pix.resize(w*h);
 
-  // BoundingBox = new SimpleBBox(std::max((int) TriangleList.size()/100, 5));
-  // //BBox construct
-  // for (Triangle tri: TriangleList){
-  //   BoundingBox->unionBounds(tri);
-  // }
-  // BoundingBox->split();
-  // BoundingBox->compact();
-  
-  BoundingBox = new MortonBBox();
-  BoundingBox->compact();
+  if(mode == 1) std::cout<<"BVH----------------------------------\n";
+  else if(mode==2) std::cout<<"LBVH-------------------\n";
+  else std::cout<<"ITER-----------------\n";
+
+  auto timer_start = std::chrono::high_resolution_clock::now();
+  if(mode == 1){
+    BoundingBox = new SimpleBBox(std::max((int) TriangleList.size()/100, 5));
+    //BBox construct
+    for (Triangle tri: TriangleList){
+      BoundingBox->unionBounds(tri);
+    }
+    BoundingBox->split();
+    BoundingBox->compact();
+  }
+  else if(mode == 2){
+    BoundingBox = new MortonBBox();
+    BoundingBox->compact();
+  }
+  auto timer_end = std::chrono::high_resolution_clock::now();
+  long t = std::chrono::duration_cast<std::chrono::nanoseconds>(timer_end - timer_start).count();
 
   //construct object vector
   for(int i = 0; i<TriangleList.size(); i++){
@@ -48,16 +62,10 @@ void saveScreenshot(string fname, string timename) {
     Object* obj = tri;
     ObjectList.push_back(obj);
   }
-  for(int i = 0; i<SphereList.size(); i++){
-    Sphere* sph = &SphereList[i];
-    Object* obj = sph;
-    ObjectList.push_back(obj);
-  }
-  // for(Triangle tri: TriangleList){
-  //   printvec3(tri.centroid());
-  //   std::cout<<"\n";
-  // }
 
+  std::cout<<"Time taken for BVH: "<<t<<"\n";
+
+  return;
   std::cout<<"Setup complete, running renders\n";
   #pragma omp parallel for
   for (int j = h-1; j >=0; j--) {
@@ -65,7 +73,8 @@ void saveScreenshot(string fname, string timename) {
           float alpha = tanx * (i + 0.5 - (w / 2)) / (w / 2);
           float beta = tany * (j + 0.5 - (h / 2)) / (h / 2);
           myvec3 raydir = normalize(alpha * ucam + beta * vcam - wcam);
-          myvec3 fragColor = raytrace_timed(raydir, eyeinit, 1, TimeFile);
+          //myvec3 fragColor = raytracer(raydir, eyeinit, 1);
+          myvec3 fragColor = raytrace_timed(raydir, eyeinit, 1, TimeFile, mode);
           //std::cout << "(" << i << ", " << j << ")\n";
           pix[i + w*j].x = fragColor.x;
           pix[i + w*j].y = fragColor.y;
@@ -90,22 +99,24 @@ void saveScreenshot(string fname, string timename) {
         int green = static_cast<int>((pix[i + w*j].y/max_val) * 255.999);
         int blue = static_cast<int>((pix[i + w*j].z/max_val) * 255.999);
         PicFile << red << ' ' << green << ' ' << blue << '\n';
+        rawFile << pix[i + w*j].x << ' ' << pix[i + w*j].y << ' ' << pix[i + w*j].z << '\n';
       }
   }
   PicFile.close();
   TimeFile.close();
+  rawFile.close();
 }
 
 int main(int argc, char* argv[]) {
 
-  if (argc < 4) {
-    cerr << "Needs scene argument and filename for output and timer\n"; 
+  if (argc < 5) {
+    cerr << "Needs scene argument and filename for output and timer, and mode\n"; 
     exit(-1); 
   }
   readfile(argv[1]);
 
   std::cout<<"File read\n";
-  saveScreenshot(argv[2], argv[3]);
+  saveScreenshot(argv[2], argv[3], stoi(argv[4]));
   return 0;
   // myvec3 min = myvec3(FLT_MAX, FLT_MAX, FLT_MAX);
   // myvec3 max = myvec3(FLT_MIN, FLT_MIN, FLT_MIN);
