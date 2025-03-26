@@ -1,5 +1,6 @@
 .vscode
 build
 buildWindows
+buildvs
 output
 stats

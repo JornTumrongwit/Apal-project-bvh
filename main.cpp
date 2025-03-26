@@ -23,7 +23,7 @@
 using namespace std ;
 
 void saveScreenshot(string fname, string timename, int mode) {
-  maxPrims = max(5, (int)TriangleList.size()/100);
+  maxPrims = 100;
   std::cout<<"Primitive amt: "<<maxPrims<<"\n";
   ofstream PicFile(fname+".ppm");
   ofstream rawFile(fname+"_unnorm.txt");
@@ -65,7 +65,6 @@ void saveScreenshot(string fname, string timename, int mode) {
 
   std::cout<<"Time taken for BVH: "<<t<<"\n";
 
-  return;
   std::cout<<"Setup complete, running renders\n";
   #pragma omp parallel for
   for (int j = h-1; j >=0; j--) {

@@ -12,6 +12,7 @@
 #include "objects.h"
 #include "bbox.h"
 
+using Allocator = std::pmr::polymorphic_allocator<std::byte>;
 #ifdef MAINPROGRAM 
 #define EXTERN 
 #else 

@@ -494,7 +494,6 @@ BBuild* emit(BBuild *&BNode, mortonObj* morton, int amt, int* totalNodes,
             orderedTriangles[firstOffset+i] = TriangleList[triIndex];
             bound = unionBounds(bound, TriangleList[triIndex]);
         }
-
         node->leaf(firstOffset, amt, bound.bottomleft, bound.topright);
         return node;
     }
@@ -533,13 +532,13 @@ float Bounds::SurfaceArea(){
     return 2 * (d.x * d.y + d.x * d.z + d.y * d.z);
 }
 
-BBuild* BuildUpperSAH(std::vector<BBuild *> finishedTrees, int start, int end){
+BBuild* BuildUpperSAH(Allocator alloc, std::vector<BBuild *> finishedTrees, int start, int end){
     int nNodes = end - start;
     // std::cout<<nNodes<<" "<<end<<" "<<start<<"\n";
     // std::cout<<finishedTrees.size()<<"\n";
     if (nNodes == 1)
         return finishedTrees[start];
-    BBuild *node = new BBuild;
+    BBuild *node = alloc.new_object<BBuild>();
 
     // Compute bounds of all nodes under this HLBVH node
     Bounds bounds;
@@ -626,8 +625,8 @@ BBuild* BuildUpperSAH(std::vector<BBuild *> finishedTrees, int start, int end){
     });
     int mid = pmid - &finishedTrees[0];
     node->interior(dim,
-        BuildUpperSAH(finishedTrees, start, mid),
-        BuildUpperSAH(finishedTrees, mid, end));
+        BuildUpperSAH(alloc, finishedTrees, start, mid),
+        BuildUpperSAH(alloc, finishedTrees, mid, end));
     return node;
 }
 
@@ -651,6 +650,8 @@ void Printer(BBuild* bb, int level, int side){
 }
 
 void MortonBBox::compact(){
+    std::pmr::monotonic_buffer_resource resource;
+    Allocator alloc(&resource);
     //The base treelet to compact
     std::vector<LBVHTreelet> treelets;
     //find the min/max
@@ -728,7 +729,8 @@ void MortonBBox::compact(){
         //clusters the morton codes with the same first 12 bits
         if (end == (int) mObj.size() || ((mObj[start].morton & mask) != (mObj[end].morton & mask))){
             size_t amt = end-start;
-            BBuild *nodes = (BBuild*) malloc(sizeof(BBuild));
+            int maxBVHNodes = 2 * maxPrims - 1;
+            BBuild *nodes = alloc.allocate_object<BBuild>(maxBVHNodes);
             treelets.push_back({start, amt, nodes});
             
             start = end;
@@ -742,7 +744,6 @@ void MortonBBox::compact(){
         int nodesCreated = 0;
         const int firstBit = 17; // 29-12
         LBVHTreelet &tr = treelets[i];
-
         //build the treelet 
         tr.nodes = emit(tr.nodes, &mObj[tr.start], tr.prim_amt, 
                         &nodesCreated, orderedTriangles, &orderedOffset, firstBit);
@@ -752,10 +753,10 @@ void MortonBBox::compact(){
     std::vector<BBuild*> finishedTrees;
     finishedTrees.reserve(treelets.size());
     std::swap(orderedTriangles, TriangleList);
-    for (LBVHTreelet &treelet : treelets)
+    for (LBVHTreelet& treelet : treelets)
         finishedTrees.push_back(treelet.nodes);
     //get the final bbuild
-    BBuild* end_build = BuildUpperSAH(finishedTrees, 0, finishedTrees.size());
+    BBuild* end_build = BuildUpperSAH(alloc, finishedTrees, 0, finishedTrees.size());
     end_build->compact();
     // Printer(end_build, 0, 0);
 }

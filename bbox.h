@@ -5,6 +5,7 @@
 #include <iostream>
 #include <span> 
 #include <vector>
+#include <memory_resource>
 #define FLT_MIN          1.175494351e-38F  
 #define FLT_MAX          3.402823466e+38F 
 enum AXIS { X, Y, Z };
@@ -18,8 +19,8 @@ struct mortonObj{
 
 //bounding top right and bottom left
 struct Bounds{
-	myvec3 bottomleft;
-	myvec3 topright;
+	myvec3 bottomleft = myvec3(FLT_MAX,FLT_MAX,FLT_MAX);
+	myvec3 topright = myvec3(-FLT_MAX,-FLT_MAX,-FLT_MAX);
 	float SurfaceArea();
 };
 
